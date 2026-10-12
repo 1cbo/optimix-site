@@ -31,6 +31,7 @@
     min-height:100vh;
   }
 
+  /* SIDEBAR */
   .sidebar{
     width:340px;
     background:var(--sidebar);
@@ -48,21 +49,16 @@
     display:flex;align-items:center;gap:14px;
     padding-bottom:22px;
     border-bottom:1px solid var(--line);
-    text-decoration:none;
-    color:inherit;
-    cursor:pointer;
+    text-decoration:none;color:inherit;cursor:pointer;
   }
   .sidebar .logo-mark{
     width:54px;height:54px;border-radius:16px;
     background:linear-gradient(135deg,var(--accent),var(--orange));
     display:flex;align-items:center;justify-content:center;
     font-weight:800;font-size:26px;color:#111;
-    flex-shrink:0;
-    overflow:hidden;
+    flex-shrink:0;overflow:hidden;
   }
-  .sidebar .logo-mark img{
-    width:100%;height:100%;object-fit:contain;padding:4px;
-  }
+  .sidebar .logo-mark img{width:100%;height:100%;object-fit:contain;padding:4px}
   .sidebar .logo-text h1{font-size:22px;font-weight:800;letter-spacing:.5px;line-height:1.1}
   .sidebar .logo-text p{font-size:13px;color:var(--muted);margin-top:2px}
 
@@ -78,9 +74,7 @@
     font-size:16px;transition:.2s;line-height:1.4;cursor:pointer;
   }
   .nav-group a:hover{background:var(--card);color:var(--txt)}
-  .nav-group a.active{
-    background:rgba(245,197,24,.12);color:var(--accent);font-weight:700;
-  }
+  .nav-group a.active{background:rgba(245,197,24,.12);color:var(--accent);font-weight:700}
   .nav-group a .ico{width:24px;text-align:center;font-size:18px;flex-shrink:0}
 
   .sidebar-footer{
@@ -91,12 +85,8 @@
   .sidebar-footer strong{color:var(--txt);display:block;margin-bottom:6px;font-size:15px}
   .sidebar-footer a{color:var(--accent);text-decoration:none}
 
-  .main{
-    margin-left:340px;flex:1;
-    padding:48px 64px 100px;
-    max-width:1400px;
-  }
-
+  /* MAIN */
+  .main{margin-left:340px;flex:1;padding:48px 64px 100px;max-width:1400px}
   .crumbs{font-size:15px;color:var(--muted);margin-bottom:28px}
   .crumbs a{color:var(--muted);text-decoration:none;cursor:pointer}
   .crumbs a:hover{color:var(--accent)}
@@ -108,7 +98,6 @@
 
   /* TITLE PAGE */
   .title-page{display:flex;flex-direction:column;gap:32px;padding-bottom:20px}
-
   .title-header{
     display:flex;align-items:center;gap:24px;
     padding-bottom:28px;border-bottom:1px solid var(--line);
@@ -117,19 +106,16 @@
     flex-shrink:0;width:110px;height:110px;
     background:#fff;border-radius:20px;
     display:flex;align-items:center;justify-content:center;
-    padding:10px;box-shadow:0 12px 32px rgba(0,0,0,.4);
-    overflow:hidden;
+    padding:10px;box-shadow:0 12px 32px rgba(0,0,0,.4);overflow:hidden;
   }
   .title-logo img{width:100%;height:100%;object-fit:contain}
   .title-header-text h1{font-size:40px;font-weight:800;letter-spacing:2px;line-height:1.1;margin-bottom:6px}
   .title-header-text p{font-size:17px;color:var(--muted);line-height:1.5}
 
   .title-content{display:grid;grid-template-columns:1fr 1.4fr;gap:48px;align-items:start}
-
   .title-left h2{font-size:38px;font-weight:800;letter-spacing:-.8px;line-height:1.15;margin-bottom:18px}
   .title-left h2 span{color:var(--accent)}
   .title-left .lead{font-size:18px;color:#b3bccc;line-height:1.6;margin-bottom:28px}
-
   .title-left .stats{display:grid;grid-template-columns:1fr 1fr;gap:14px}
   .title-left .stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px}
   .title-left .stat .label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;font-weight:600}
@@ -242,11 +228,7 @@
   .price-table td:first-child{color:var(--muted);font-weight:700;width:70px;font-size:19px}
   .price-table td:nth-child(2){font-weight:600;line-height:1.5;font-size:18px}
   .price-table .price-cell{font-weight:800;color:var(--accent);white-space:nowrap;text-align:right;font-size:20px}
-  .cat-tag{
-    display:inline-block;padding:7px 18px;border-radius:999px;
-    font-size:12px;font-weight:700;text-transform:uppercase;
-    letter-spacing:.5px;white-space:nowrap;
-  }
+  .cat-tag{display:inline-block;padding:7px 18px;border-radius:999px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}
 
   /* DELIVERY / CONTACT */
   .section-head{text-align:center;margin-bottom:48px}
@@ -300,6 +282,93 @@
   .contact-card.highlight{background:linear-gradient(135deg,#1a1f2a,#141820);border-color:rgba(245,197,24,.3)}
   .contact-card.highlight .ico{background:linear-gradient(135deg,var(--accent),var(--orange));color:#111}
 
+  /* ============ CALCULATOR ============ */
+  .calc-wrap{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start}
+  .calc-form{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:36px 40px}
+  .calc-form h3{font-size:24px;font-weight:800;margin-bottom:24px;display:flex;align-items:center;gap:14px}
+  .calc-form h3::before{content:'';width:5px;height:26px;border-radius:3px;background:var(--accent)}
+  .calc-field{margin-bottom:22px}
+  .calc-field label{display:block;font-size:14px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px}
+  .calc-field select,.calc-field input[type="number"]{
+    width:100%;padding:16px 18px;background:var(--bg);
+    border:1px solid var(--line);border-radius:12px;
+    color:var(--txt);font-size:18px;font-family:inherit;font-weight:600;transition:.2s;
+  }
+  .calc-field select:focus,.calc-field input:focus{outline:none;border-color:var(--accent)}
+  .calc-field input[type="number"]::-webkit-outer-spin-button,
+  .calc-field input[type="number"]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+  .calc-field input[type="number"]{-moz-appearance:textfield}
+
+  /* ФАСОВКА — КНОПКИ */
+  .calc-packs{display:flex;flex-wrap:wrap;gap:10px}
+  .calc-pack{
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:14px 22px;background:var(--bg);
+    border:2px solid var(--line);border-radius:12px;
+    cursor:pointer;transition:.2s;min-width:110px;
+  }
+  .calc-pack:hover{border-color:var(--accent)}
+  .calc-pack.active{border-color:var(--accent);background:rgba(245,197,24,.1)}
+  .calc-pack input{display:none}
+  .calc-pack .size{font-size:20px;font-weight:800;color:var(--txt);line-height:1.2}
+  .calc-pack .price{font-size:13px;color:var(--muted);margin-top:2px;font-weight:600}
+  .calc-pack.active .size{color:var(--accent)}
+  .calc-pack.active .price{color:var(--txt)}
+
+  .calc-checkbox{
+    display:flex;align-items:center;gap:12px;padding:16px 18px;
+    background:var(--bg);border:1px solid var(--line);border-radius:12px;
+    cursor:pointer;font-size:16px;font-weight:600;transition:.2s;
+  }
+  .calc-checkbox:hover{border-color:var(--accent)}
+  .calc-checkbox input{width:20px;height:20px;cursor:pointer;accent-color:var(--accent)}
+
+  .calc-result{
+    background:linear-gradient(135deg,#1a1f2a,#141820);
+    border:1px solid var(--line);border-radius:22px;
+    padding:36px 40px;position:relative;overflow:hidden;
+  }
+  .calc-result::before{
+    content:'';position:absolute;top:-100px;right:-100px;
+    width:280px;height:280px;
+    background:radial-gradient(circle,rgba(245,197,24,.15),transparent 70%);
+    border-radius:50%;pointer-events:none;
+  }
+  .calc-result h3{font-size:24px;font-weight:800;margin-bottom:24px;color:var(--accent);position:relative}
+  .calc-row{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:16px 0;border-bottom:1px solid var(--line);
+    position:relative;gap:20px;
+  }
+  .calc-row:last-child{border-bottom:none}
+  .calc-row .lbl{font-size:16px;color:var(--muted);font-weight:600}
+  .calc-row .val{font-size:22px;font-weight:800;color:var(--txt);text-align:right}
+  .calc-row .val.accent{color:var(--accent)}
+  .calc-row.total{border-top:2px solid var(--accent);border-bottom:none;margin-top:12px;padding-top:22px}
+  .calc-row.total .lbl{font-size:18px;color:var(--txt);font-weight:800}
+  .calc-row.total .val{font-size:32px;color:var(--accent)}
+
+  .calc-empty{text-align:center;padding:40px 20px;color:var(--muted);font-size:17px;position:relative}
+  .calc-empty .icon{font-size:56px;opacity:.3;display:block;margin-bottom:16px}
+
+  .calc-savings{
+    background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);
+    border-radius:12px;padding:16px 20px;margin-top:20px;
+    font-size:16px;color:#86efac;text-align:center;font-weight:700;position:relative;
+  }
+
+  .calc-variants{margin-top:20px;padding:20px;background:rgba(255,255,255,.03);border-radius:14px;position:relative}
+  .calc-variants .variants-title{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;font-weight:700;margin-bottom:14px}
+  .calc-variant{display:flex;justify-content:space-between;align-items:center;padding:10px 0;font-size:15px;border-bottom:1px dashed rgba(255,255,255,.06);gap:16px}
+  .calc-variant:last-child{border-bottom:none}
+  .calc-variant .name{color:var(--muted);font-weight:600}
+  .calc-variant .info{color:var(--txt);font-weight:700;text-align:right;white-space:nowrap}
+  .calc-variant.best .name{color:var(--green);font-weight:800}
+  .calc-variant.best .info{color:var(--green)}
+
+  .calc-cta{margin-top:24px;display:flex;gap:12px;flex-wrap:wrap;position:relative}
+
+  /* PAGER */
   .pager{
     display:flex;justify-content:space-between;gap:20px;
     margin-top:56px;padding-top:36px;border-top:1px solid var(--line);
@@ -312,9 +381,11 @@
   .pager a:hover{transform:translateX(2px)}
   .pager a.back:hover{transform:translateX(-2px)}
 
+  /* RESPONSIVE */
   @media(max-width:1200px){
     .title-content{grid-template-columns:1fr 1.2fr;gap:36px}
     .title-left h2{font-size:32px}
+    .calc-wrap{grid-template-columns:1fr}
   }
   @media(max-width:1024px){
     body{flex-direction:column;font-size:18px}
@@ -336,6 +407,7 @@
     .delivery-grid{grid-template-columns:1fr}
     .contact-grid{grid-template-columns:1fr}
     .section-head h2{font-size:34px}
+    .calc-form,.calc-result{padding:28px}
   }
   @media(max-width:900px){
     .title-header{flex-direction:row;align-items:center}
@@ -402,6 +474,13 @@
     .contact-card .value{font-size:19px}
     .section-head h2{font-size:26px}
     .section-head p{font-size:17px}
+    .calc-form,.calc-result{padding:24px 22px}
+    .calc-form h3,.calc-result h3{font-size:20px}
+    .calc-row .val{font-size:19px}
+    .calc-row.total .val{font-size:26px}
+    .calc-pack{padding:12px 16px;min-width:90px}
+    .calc-pack .size{font-size:17px}
+    .calc-pack .price{font-size:12px}
   }
 </style>
 </head>
@@ -446,6 +525,7 @@
 
   <nav class="nav-group">
     <div class="group-title">Информация</div>
+    <a onclick="go('calc')" data-nav="calc"><span class="ico">🧮</span> Калькулятор</a>
     <a onclick="go('price')" data-nav="price"><span class="ico">📋</span> Сводная таблица</a>
     <a onclick="go('delivery')" data-nav="delivery"><span class="ico">🚚</span> Условия поставки</a>
     <a onclick="go('contact')" data-nav="contact"><span class="ico">📞</span> Контакты</a>
@@ -462,7 +542,7 @@
 <!-- ================= MAIN ================= -->
 <main class="main">
 
-  <!-- ТИТУЛЬНАЯ -->
+  <!-- ==================== ТИТУЛЬНАЯ ==================== -->
   <div class="page active" id="page-title">
     <div class="title-page">
       <div class="title-header">
@@ -501,7 +581,73 @@
     </div>
   </div>
 
-  <!-- G1 -->
+  <!-- ==================== КАЛЬКУЛЯТОР ==================== -->
+  <div class="page" id="page-calc">
+    <div class="crumbs"><a onclick="go('title')">Главная</a><span>›</span>Калькулятор расчёта</div>
+
+    <div class="section-head">
+      <div class="eyebrow">🧮 Калькулятор</div>
+      <h2>Расчёт количества материалов</h2>
+      <p>Выберите продукт, фасовку, укажите площадь и слои — получите количество банок и стоимость</p>
+    </div>
+
+    <div class="calc-wrap">
+      <div class="calc-form">
+        <h3>Параметры расчёта</h3>
+
+        <div class="calc-field">
+          <label for="calc-product">Продукт</label>
+          <select id="calc-product">
+            <option value="g1">Грунтовка глубокого проникновения</option>
+            <option value="g2">Грунт-концентрат 1:4</option>
+            <option value="g3">Грунтовка «Бетон-контакт»</option>
+            <option value="c1">Очиститель от цемента и высолов</option>
+            <option value="p1">Краска «Фасадная»</option>
+            <option value="p2">Краска «Интерьерная»</option>
+            <option value="p3">Краска «Моющаяся»</option>
+            <option value="p4">Краска «Для потолков»</option>
+          </select>
+        </div>
+
+        <div class="calc-field">
+          <label>Фасовка</label>
+          <div class="calc-packs" id="calc-packs">
+            <!-- Заполняется JS -->
+          </div>
+        </div>
+
+        <div class="calc-field">
+          <label for="calc-area">Площадь поверхности, м²</label>
+          <input type="number" id="calc-area" value="100" min="1" step="1">
+        </div>
+
+        <div class="calc-field">
+          <label for="calc-layers">Количество слоёв</label>
+          <select id="calc-layers">
+            <option value="1">1 слой</option>
+            <option value="2" selected>2 слоя</option>
+            <option value="3">3 слоя</option>
+          </select>
+        </div>
+
+        <label class="calc-checkbox">
+          <input type="checkbox" id="calc-reserve" checked>
+          Добавить запас 10%
+        </label>
+      </div>
+
+      <div class="calc-result" id="calc-result">
+        <!-- Заполняется JS -->
+      </div>
+    </div>
+
+    <div class="pager">
+      <a onclick="go('title')" class="back">← Титульная страница</a>
+      <a onclick="go('price')">Сводная таблица →</a>
+    </div>
+  </div>
+
+  <!-- ==================== G1 ==================== -->
   <div class="page" id="page-g1">
     <div class="crumbs"><a onclick="go('title')">Главная</a><span>›</span>Грунтовки<span>›</span>Глубокого проникновения</div>
 
@@ -526,7 +672,7 @@
 
         <div class="cta-row">
           <a href="tel:+79253254458" class="btn btn-primary">📞 Запросить КП</a>
-          <a onclick="go('contact')" class="btn btn-secondary">Связаться</a>
+          <a onclick="go('calc')" class="btn btn-secondary">🧮 Рассчитать</a>
         </div>
       </div>
     </div>
@@ -550,7 +696,7 @@
         <tr><td>Основа</td><td>Водная</td></tr>
         <tr><td>Расход</td><td>100–150 мл/м²</td></tr>
         <tr><td>Температура работ</td><td>не менее +5 °С</td></tr>
-        <tr><td>Свойства</td><td>Пожаровзрывобезопасная, антисептическая, влагостойкая, без органических растворителей</td></tr>
+        <tr><td>Свойства</td><td>Пожаровзрывобезопасная, антисептическая, влагостойкая</td></tr>
         <tr><td>Морозостойкость</td><td>до 5 циклов замораживания-оттаивания</td></tr>
         <tr><td>Срок годности</td><td>12 месяцев</td></tr>
         <tr><td>Фасовка</td><td>10 л</td></tr>
@@ -570,7 +716,7 @@
     </div>
   </div>
 
-  <!-- G2 -->
+  <!-- ==================== G2 ==================== -->
   <div class="page" id="page-g2">
     <div class="crumbs"><a onclick="go('title')">Главная</a><span>›</span>Грунтовки<span>›</span>Концентрат 1:4</div>
 
@@ -595,7 +741,7 @@
 
         <div class="cta-row">
           <a href="tel:+79253254458" class="btn btn-primary">📞 Запросить КП</a>
-          <a onclick="go('contact')" class="btn btn-secondary">Связаться</a>
+          <a onclick="go('calc')" class="btn btn-secondary">🧮 Рассчитать</a>
         </div>
       </div>
     </div>
@@ -642,7 +788,7 @@
     </div>
   </div>
 
-  <!-- G3 -->
+  <!-- ==================== G3 ==================== -->
   <div class="page" id="page-g3">
     <div class="crumbs"><a onclick="go('title')">Главная</a><span>›</span>Грунтовки<span>›</span>Бетон-контакт</div>
 
@@ -667,7 +813,7 @@
 
         <div class="cta-row">
           <a href="tel:+79253254458" class="btn btn-primary">📞 Запросить КП</a>
-          <a onclick="go('contact')" class="btn btn-secondary">Связаться</a>
+          <a onclick="go('calc')" class="btn btn-secondary">🧮 Рассчитать</a>
         </div>
       </div>
     </div>
@@ -709,7 +855,7 @@
     </div>
   </div>
 
-  <!-- C1 -->
+  <!-- ==================== C1 ==================== -->
   <div class="page" id="page-c1">
     <div class="crumbs"><a onclick="go('title')">Главная</a><span>›</span>Очиститель</div>
 
@@ -734,7 +880,7 @@
 
         <div class="cta-row">
           <a href="tel:+79253254458" class="btn btn-primary">📞 Запросить КП</a>
-          <a onclick="go('contact')" class="btn btn-secondary">Связаться</a>
+          <a onclick="go('calc')" class="btn btn-secondary">🧮 Рассчитать</a>
         </div>
       </div>
     </div>
@@ -778,7 +924,7 @@
     </div>
   </div>
 
-  <!-- P1 -->
+  <!-- ==================== P1 ==================== -->
   <div class="page" id="page-p1">
     <div class="crumbs"><a onclick="go('title')">Главная</a><span>›</span>Краски<span>›</span>Фасадная</div>
 
@@ -803,7 +949,7 @@
 
         <div class="cta-row">
           <a href="tel:+79253254458" class="btn btn-primary">📞 Запросить КП</a>
-          <a onclick="go('contact')" class="btn btn-secondary">Связаться</a>
+          <a onclick="go('calc')" class="btn btn-secondary">🧮 Рассчитать</a>
         </div>
       </div>
     </div>
@@ -849,7 +995,7 @@
     </div>
   </div>
 
-  <!-- P2 -->
+  <!-- ==================== P2 ==================== -->
   <div class="page" id="page-p2">
     <div class="crumbs"><a onclick="go('title')">Главная</a><span>›</span>Краски<span>›</span>Интерьерная</div>
 
@@ -874,7 +1020,7 @@
 
         <div class="cta-row">
           <a href="tel:+79253254458" class="btn btn-primary">📞 Запросить КП</a>
-          <a onclick="go('contact')" class="btn btn-secondary">Связаться</a>
+          <a onclick="go('calc')" class="btn btn-secondary">🧮 Рассчитать</a>
         </div>
       </div>
     </div>
@@ -898,7 +1044,7 @@
         <tr><td>Расход</td><td>0,13–0,15 кг/м² на слой</td></tr>
         <tr><td>Время сушки</td><td>1 час</td></tr>
         <tr><td>Температура основания</td><td>от +5 °С до +30 °С</td></tr>
-        <tr><td>Свойства</td><td>Моющаяся, водостойкая, антисептические добавки, наполнитель — мраморная мука</td></tr>
+        <tr><td>Свойства</td><td>Моющаяся, водостойкая, антисептические добавки</td></tr>
         <tr><td>Срок годности</td><td>12 месяцев</td></tr>
         <tr><td>Стандарт</td><td>ГОСТ 28196-89</td></tr>
         <tr><td>Фасовка</td><td>14 кг / 25 кг</td></tr>
@@ -918,7 +1064,7 @@
     </div>
   </div>
 
-  <!-- P3 -->
+  <!-- ==================== P3 ==================== -->
   <div class="page" id="page-p3">
     <div class="crumbs"><a onclick="go('title')">Главная</a><span>›</span>Краски<span>›</span>Моющаяся</div>
 
@@ -943,7 +1089,7 @@
 
         <div class="cta-row">
           <a href="tel:+79253254458" class="btn btn-primary">📞 Запросить КП</a>
-          <a onclick="go('contact')" class="btn btn-secondary">Связаться</a>
+          <a onclick="go('calc')" class="btn btn-secondary">🧮 Рассчитать</a>
         </div>
       </div>
     </div>
@@ -988,7 +1134,7 @@
     </div>
   </div>
 
-  <!-- P4 -->
+  <!-- ==================== P4 ==================== -->
   <div class="page" id="page-p4">
     <div class="crumbs"><a onclick="go('title')">Главная</a><span>›</span>Краски<span>›</span>Для потолков</div>
 
@@ -1013,7 +1159,7 @@
 
         <div class="cta-row">
           <a href="tel:+79253254458" class="btn btn-primary">📞 Запросить КП</a>
-          <a onclick="go('contact')" class="btn btn-secondary">Связаться</a>
+          <a onclick="go('calc')" class="btn btn-secondary">🧮 Рассчитать</a>
         </div>
       </div>
     </div>
@@ -1037,7 +1183,7 @@
         <tr><td>Расход</td><td>0,13–0,15 кг/м² на слой</td></tr>
         <tr><td>Время сушки</td><td>1 час</td></tr>
         <tr><td>Температура основания</td><td>от +5 °С до +30 °С</td></tr>
-        <tr><td>Свойства</td><td>Паропроницаемая, моющаяся, водостойкая, антисептические добавки</td></tr>
+        <tr><td>Свойства</td><td>Паропроницаемая, моющаяся, водостойкая</td></tr>
         <tr><td>Срок годности</td><td>12 месяцев</td></tr>
         <tr><td>Стандарт</td><td>ГОСТ 28196-89</td></tr>
         <tr><td>Фасовка</td><td>14 кг / 25 кг</td></tr>
@@ -1057,7 +1203,7 @@
     </div>
   </div>
 
-  <!-- PRICE -->
+  <!-- ==================== PRICE ==================== -->
   <div class="page" id="page-price">
     <div class="crumbs"><a onclick="go('title')">Главная</a><span>›</span>Сводная таблица</div>
 
@@ -1091,7 +1237,7 @@
     </div>
   </div>
 
-  <!-- DELIVERY -->
+  <!-- ==================== DELIVERY ==================== -->
   <div class="page" id="page-delivery">
     <div class="crumbs"><a onclick="go('title')">Главная</a><span>›</span>Условия поставки</div>
 
@@ -1142,7 +1288,7 @@
     </div>
   </div>
 
-  <!-- CONTACT -->
+  <!-- ==================== CONTACT ==================== -->
   <div class="page" id="page-contact">
     <div class="crumbs"><a onclick="go('title')">Главная</a><span>›</span>Контакты</div>
 
@@ -1215,6 +1361,7 @@
 </main>
 
 <script>
+  // ================== НАВИГАЦИЯ ==================
   function go(id){
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.nav-group a').forEach(a => a.classList.remove('active'));
@@ -1225,7 +1372,153 @@
     }
     const nav = document.querySelector(`[data-nav="${id}"]`);
     if(nav) nav.classList.add('active');
+    if(id === 'calc') renderCalc();
   }
+
+  // ================== ДАННЫЕ ПРОДУКТОВ ==================
+  const PRODUCTS = {
+    g1:{ name:'Грунтовка глубокого проникновения', unit:'л', consumption:0.125, packs:[{size:10, price:900}] },
+    g2:{ name:'Грунт-концентрат 1:4', unit:'л', consumption:0.11, packs:[{size:10, price:2500}] },
+    g3:{ name:'Грунтовка «Бетон-контакт»', unit:'л', consumption:0.475, packs:[{size:20, price:1900}] },
+    c1:{ name:'Очиститель от цемента и высолов', unit:'л', consumption:0.15, packs:[{size:10, price:1700}] },
+    p1:{ name:'Краска «Фасадная»', unit:'кг', consumption:0.14, packs:[{size:14, price:2500},{size:25, price:4400}] },
+    p2:{ name:'Краска «Интерьерная»', unit:'кг', consumption:0.14, packs:[{size:14, price:1650},{size:25, price:2870}] },
+    p3:{ name:'Краска «Моющаяся»', unit:'кг', consumption:0.14, packs:[{size:14, price:2350},{size:25, price:4100}] },
+    p4:{ name:'Краска «Для потолков»', unit:'кг', consumption:0.14, packs:[{size:14, price:1500},{size:25, price:2570}] }
+  };
+
+  // Текущая выбранная фасовка (индекс)
+  let selectedPackIndex = 0;
+
+  // ================== КАЛЬКУЛЯТОР ==================
+  function fmt(n, d=2){
+    if(Number.isInteger(n)) return n.toLocaleString('ru-RU');
+    return n.toLocaleString('ru-RU',{minimumFractionDigits:d, maximumFractionDigits:d});
+  }
+
+  // Отрисовать кнопки фасовок при выборе продукта
+  function renderPacks(){
+    const id = document.getElementById('calc-product')?.value;
+    const p = PRODUCTS[id];
+    const wrap = document.getElementById('calc-packs');
+    if(!p || !wrap) return;
+
+    // Сброс на первую фасовку
+    selectedPackIndex = 0;
+
+    wrap.innerHTML = p.packs.map((pack, i) => `
+      <label class="calc-pack ${i === 0 ? 'active' : ''}" data-index="${i}">
+        <input type="radio" name="calc-pack" value="${i}" ${i === 0 ? 'checked' : ''}>
+        <span class="size">${pack.size} ${p.unit}</span>
+        <span class="price">${pack.price.toLocaleString('ru-RU')} ₽</span>
+      </label>
+    `).join('');
+
+    // Клик по кнопкам
+    wrap.querySelectorAll('.calc-pack').forEach(el => {
+      el.addEventListener('click', () => {
+        wrap.querySelectorAll('.calc-pack').forEach(x => x.classList.remove('active'));
+        el.classList.add('active');
+        selectedPackIndex = parseInt(el.dataset.index);
+        renderCalc();
+      });
+    });
+  }
+
+  function calcProduct(id, area, layers, reserve, packIndex){
+    const p = PRODUCTS[id];
+    if(!p) return null;
+
+    const base = area * p.consumption * layers;
+    const total = reserve ? base * 1.1 : base;
+
+    // Считаем по ВСЕМ фасовкам — для сравнения
+    const allVariants = p.packs.map(pack => {
+      const qty = Math.max(1, Math.ceil(total / pack.size));
+      return { size:pack.size, qty:qty, totalQty:pack.size*qty, price:qty*pack.price, pricePerUnit:pack.price };
+    });
+
+    // Выбранная пользователем
+    const selected = allVariants[packIndex] || allVariants[0];
+
+    // Лучшая по цене
+    const best = allVariants.reduce((min,v) => v.price<min.price ? v : min, allVariants[0]);
+
+    return { product:p, total, variants:allVariants, selected, best };
+  }
+
+  function renderCalc(){
+    const id = document.getElementById('calc-product')?.value;
+    const area = parseFloat(document.getElementById('calc-area')?.value) || 0;
+    const layers = parseInt(document.getElementById('calc-layers')?.value) || 1;
+    const reserve = document.getElementById('calc-reserve')?.checked;
+    const container = document.getElementById('calc-result');
+    if(!container) return;
+
+    if(!area || area <= 0){
+      container.innerHTML = `<h3>Результат расчёта</h3><div class="calc-empty"><span class="icon">🧮</span>Введите площадь поверхности<br>чтобы увидеть расчёт</div>`;
+      return;
+    }
+
+    const res = calcProduct(id, area, layers, reserve, selectedPackIndex);
+    if(!res) return;
+    const { product, total, variants, selected, best } = res;
+
+    let html = `<h3>Результат расчёта</h3>`;
+    html += `<div class="calc-row"><span class="lbl">Продукт</span><span class="val">${product.name}</span></div>`;
+    html += `<div class="calc-row"><span class="lbl">Площадь × слои</span><span class="val">${area} м² × ${layers}</span></div>`;
+    html += `<div class="calc-row"><span class="lbl">Нужно материала${reserve?' (+10%)':''}</span><span class="val accent">${fmt(total)} ${product.unit}</span></div>`;
+    html += `<div class="calc-row"><span class="lbl">Выбранная фасовка</span><span class="val">${selected.size} ${product.unit} × ${selected.qty} шт</span></div>`;
+    html += `<div class="calc-row"><span class="lbl">Итого материала</span><span class="val">${selected.totalQty} ${product.unit}</span></div>`;
+    html += `<div class="calc-row total"><span class="lbl">Стоимость</span><span class="val">${selected.price.toLocaleString('ru-RU')} ₽</span></div>`;
+
+    // Если фасовок несколько — показываем сравнение
+    if(variants.length > 1){
+      html += `<div class="calc-variants"><div class="variants-title">Сравнение фасовок</div>`;
+      variants.forEach((v, i) => {
+        const isBest = v.size === best.size;
+        const isSelected = i === selectedPackIndex;
+        const mark = isBest ? '★' : (isSelected ? '●' : '');
+        html += `<div class="calc-variant ${isBest?'best':''}">
+          <span class="name">${v.size} ${product.unit} × ${v.qty} шт ${mark}</span>
+          <span class="info">${v.price.toLocaleString('ru-RU')} ₽</span>
+        </div>`;
+      });
+      html += `</div>`;
+
+      // Экономия (если выбранная не самая выгодная)
+      if(selected.size !== best.size){
+        const saving = selected.price - best.price;
+        html += `<div class="calc-savings">💡 Если выбрать ${best.size} ${product.unit} — сэкономите ${saving.toLocaleString('ru-RU')} ₽</div>`;
+      } else if(variants.length > 1){
+        const expensive = variants.reduce((max,v) => v.price>max.price ? v : max, variants[0]);
+        const saving = expensive.price - best.price;
+        if(saving > 0){
+          html += `<div class="calc-savings">💰 Вы выбрали самую выгодную фасовку — экономия ${saving.toLocaleString('ru-RU')} ₽</div>`;
+        }
+      }
+    }
+
+    html += `<div class="calc-cta"><a href="tel:+79253254458" class="btn btn-primary">📞 Запросить КП</a><a onclick="go('contact')" class="btn btn-secondary">Связаться</a></div>`;
+    container.innerHTML = html;
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // При смене продукта — перерисовать фасовки
+    document.getElementById('calc-product')?.addEventListener('change', () => {
+      renderPacks();
+      renderCalc();
+    });
+
+    // Остальные поля
+    ['calc-area','calc-layers','calc-reserve'].forEach(id => {
+      const el = document.getElementById(id);
+      if(el){ el.addEventListener('input', renderCalc); el.addEventListener('change', renderCalc); }
+    });
+
+    // Инициализация
+    renderPacks();
+  });
 </script>
 
 </body>
