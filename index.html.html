@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OPTIMIX — Каталог продукции</title>
+<style>
+  :root{
+    --bg:#0a0d14;
+    --sidebar:#0d111a;
+    --card:#141820;
+    --card2:#1a1f2a;
+    --line:#242a36;
+    --txt:#eef2f8;
+    --muted:#8b95a7;
+    --accent:#f5c518;
+    --orange:#e63946;
+    --green:#22c55e;
+    --blue:#3b82f6;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  body{
+    font-family:'Segoe UI',Roboto,-apple-system,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--txt);
+    line-height:1.7;
+    font-size:19px;
+    -webkit-font-smoothing:antialiased;
+    display:flex;
+    min-height:100vh;
+  }
+
+  .sidebar{
+    width:340px;
+    background:var(--sidebar);
+    border-right:1px solid var(--line);
+    padding:32px 22px;
+    position:fixed;
+    top:0;left:0;bottom:0;
+    overflow-y:auto;
+    display:flex;
+    flex-direction:column;
+    gap:22px;
+    z-index:10;
+  }
+  .sidebar .logo{
+    display:flex;align-items:center;gap:14px;
+    padding-bottom:22px;
+    border-bottom:1px solid var(--line);
+    text-decoration:none;
+    color:inherit;
+    cursor:pointer;
+  }
+  .sidebar .logo-mark{
+    width:54px;height:54px;border-radius:16px;
+    background:linear-gradient(135deg,var(--accent),var(--orange));
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:26px;color:#111;
+    flex-shrink:0;
+    overflow:hidden;
+  }
+  .sidebar .logo-mark img{
+    width:100%;height:100%;object-fit:contain;padding:4px;
+  }
+  .sidebar .logo-text h1{font-size:22px;font-weight:800;letter-spacing:.5px;line-height:1.1}
+  .sidebar .logo-text p{font-size:13px;color:var(--muted);margin-top:2px}
+
+  .nav-group{display:flex;flex-direction:column;gap:4px}
+  .nav-group .group-title{
+    font-size:12px;text-transform:uppercase;letter-spacing:1px;
+    color:var(--muted);font-weight:700;padding:10px 14px 6px;
+  }
+  .nav-group a{
+    display:flex;align-items:center;gap:12px;
+    padding:12px 14px;border-radius:11px;
+    color:#b3bccc;text-decoration:none;
+    font-size:16px;transition:.2s;line-height:1.4;cursor:pointer;
+  }
+  .nav-group a:hover{background:var(--card);color:var(--txt)}
+  .nav-group a.active{
+    background:rgba(245,197,24,.12);color:var(--accent);font-weight:700;
+  }
+  .nav-group a .ico{width:24px;text-align:center;font-size:18px;flex-shrink:0}
+
+  .sidebar-footer{
+    margin-top:auto;padding-top:22px;
+    border-top:1px solid var(--line);
+    font-size:14px;color:var(--muted);line-height:1.7;
+  }
+  .sidebar-footer strong{color:var(--txt);display:block;margin-bottom:6px;font-size:15px}
+  .sidebar-footer a{color:var(--accent);text-decoration:none}
+
+  .main{
+    margin-left:340px;flex:1;
+    padding:48px 64px 100px;
+    max-width:1400px;
+  }
+
+  .crumbs{font-size:15px;color:var(--muted);margin-bottom:28px}
+  .crumbs a{color:var(--muted);text-decoration:none;cursor:pointer}
+  .crumbs a:hover{color:var(--accent)}
+  .crumbs span{margin:0 8px}
+
+  .page{display:none}
+  .page.active{display:block;animation:fade .3s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  /* TITLE PAGE */
+  .title-page{display:flex;flex-direction:column;gap:32px;padding-bottom:20px}
+
+  .title-header{
+    display:flex;align-items:center;gap:24px;
+    padding-bottom:28px;border-bottom:1px solid var(--line);
+  }
+  .title-logo{
+    flex-shrink:0;width:110px;height:110px;
+    background:#fff;border-radius:20px;
+    display:flex;align-items:center;justify-content:center;
+    padding:10px;box-shadow:0 12px 32px rgba(0,0,0,.4);
+    overflow:hidden;
+  }
+  .title-logo img{width:100%;height:100%;object-fit:contain}
+  .title-header-text h1{font-size:40px;font-weight:800;letter-spacing:2px;line-height:1.1;margin-bottom:6px}
+  .title-header-text p{font-size:17px;color:var(--muted);line-height:1.5}
+
+  .title-content{display:grid;grid-template-columns:1fr 1.4fr;gap:48px;align-items:start}
+
+  .title-left h2{font-size:38px;font-weight:800;letter-spacing:-.8px;line-height:1.15;margin-bottom:18px}
+  .title-left h2 span{color:var(--accent)}
+  .title-left .lead{font-size:18px;color:#b3bccc;line-height:1.6;margin-bottom:28px}
+
+  .title-left .stats{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .title-left .stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px}
+  .title-left .stat .label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;font-weight:600}
+  .title-left .stat .value{font-size:22px;font-weight:800;line-height:1.2}
+  .title-left .stat .sub{font-size:13px;color:var(--muted);margin-top:4px}
+
+  .title-right .about-card{
+    background:var(--card);border:1px solid var(--line);
+    border-radius:22px;padding:36px 40px;position:relative;overflow:hidden;
+  }
+  .title-right .about-card::before{
+    content:'';position:absolute;top:-80px;right:-80px;
+    width:240px;height:240px;
+    background:radial-gradient(circle,rgba(245,197,24,.12),transparent 70%);
+    border-radius:50%;pointer-events:none;
+  }
+  .title-right .about-title{font-size:24px;font-weight:800;margin-bottom:22px;color:var(--accent);position:relative}
+  .title-right .about-card p{font-size:18px;line-height:1.8;margin-bottom:16px;color:#d5dce6;position:relative}
+  .title-right .about-card p:last-child{margin-bottom:0}
+  .title-right .about-card strong{color:var(--txt);font-weight:700}
+
+  /* PRODUCT */
+  .product-layout{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start;margin-bottom:56px}
+  .product-img{
+    background:#fff;border:1px solid var(--line);
+    border-radius:24px;height:520px;
+    display:flex;align-items:center;justify-content:center;
+    position:relative;overflow:hidden;padding:24px;
+  }
+  .product-img img{width:100%;height:100%;object-fit:contain}
+
+  .product-info .cat-tag{
+    display:inline-block;padding:7px 18px;border-radius:999px;
+    font-size:13px;font-weight:700;text-transform:uppercase;
+    letter-spacing:.6px;margin-bottom:22px;
+  }
+  .cat-ground{background:rgba(59,130,246,.15);color:#60a5fa}
+  .cat-clean{background:rgba(34,197,94,.15);color:#4ade80}
+  .cat-paint{background:rgba(245,197,24,.15);color:var(--accent)}
+
+  .product-info h1{font-size:42px;font-weight:800;line-height:1.15;margin-bottom:22px;letter-spacing:-.5px}
+  .product-info .short-desc{font-size:19px;color:#b3bccc;line-height:1.7;margin-bottom:32px}
+
+  .price-box{
+    background:linear-gradient(135deg,#1a1f2a,#141820);
+    border:1px solid var(--line);border-radius:20px;
+    padding:28px 32px;margin-bottom:28px;
+    display:flex;align-items:center;justify-content:space-between;gap:24px;
+  }
+  .price-box .price-label{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;font-weight:700}
+  .price-box .price-main{font-size:52px;font-weight:800;color:var(--accent);line-height:1}
+  .price-box .pack-value{font-size:26px;font-weight:800;color:var(--txt)}
+
+  .specs{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:32px}
+  .spec{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+  .spec .lbl{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;font-weight:600}
+  .spec .val{font-size:18px;font-weight:700}
+
+  .cta-row{display:flex;flex-wrap:wrap;gap:14px}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:16px 32px;border-radius:13px;
+    font-size:17px;font-weight:700;text-decoration:none;
+    transition:.2s;cursor:pointer;border:none;font-family:inherit;
+  }
+  .btn-primary{background:var(--accent);color:#111;box-shadow:0 8px 24px rgba(245,197,24,.25)}
+  .btn-primary:hover{background:#f7d145;transform:translateY(-1px)}
+  .btn-secondary{background:transparent;color:var(--txt);border:1px solid var(--line)}
+  .btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
+
+  .detail-block{
+    background:var(--card);border:1px solid var(--line);
+    border-radius:22px;padding:40px 46px;margin-bottom:24px;
+  }
+  .detail-block h3{font-size:24px;font-weight:800;margin-bottom:24px;display:flex;align-items:center;gap:14px}
+  .detail-block h3::before{content:'';width:5px;height:26px;border-radius:3px;background:var(--accent)}
+  .detail-block p{font-size:18px;line-height:1.8;color:#cbd5e1;margin-bottom:14px}
+  .detail-block p:last-child{margin-bottom:0}
+  .detail-block ul{list-style:none;padding:0}
+  .detail-block ul li{
+    font-size:18px;line-height:1.75;color:#cbd5e1;
+    padding:13px 0 13px 34px;position:relative;
+    border-bottom:1px solid var(--line);
+  }
+  .detail-block ul li:last-child{border-bottom:none}
+  .detail-block ul li::before{
+    content:'✓';position:absolute;left:0;top:13px;
+    color:var(--green);font-weight:800;font-size:19px;
+  }
+
+  .tech-table{width:100%;border-collapse:collapse;font-size:17px;margin-top:10px}
+  .tech-table th,.tech-table td{text-align:left;padding:18px 20px;border-bottom:1px solid var(--line)}
+  .tech-table tr:last-child td{border-bottom:none}
+  .tech-table td:first-child{color:var(--muted);width:45%;font-weight:600}
+  .tech-table td:last-child{font-weight:600}
+
+  /* PRICE TABLE */
+  .price-table-wrap{background:var(--card);border:1px solid var(--line);border-radius:24px;overflow:hidden}
+  .price-table{width:100%;border-collapse:collapse;font-size:18px}
+  .price-table thead{background:var(--card2)}
+  .price-table th{
+    text-align:left;padding:24px 26px;
+    font-size:13px;text-transform:uppercase;letter-spacing:.8px;
+    color:var(--muted);font-weight:700;
+    border-bottom:1px solid var(--line);white-space:nowrap;
+  }
+  .price-table td{padding:24px 26px;border-bottom:1px solid var(--line);vertical-align:middle;color:var(--txt)}
+  .price-table tbody tr:last-child td{border-bottom:none}
+  .price-table tbody tr:hover{background:rgba(245,197,24,.03)}
+  .price-table td:first-child{color:var(--muted);font-weight:700;width:70px;font-size:19px}
+  .price-table td:nth-child(2){font-weight:600;line-height:1.5;font-size:18px}
+  .price-table .price-cell{font-weight:800;color:var(--accent);white-space:nowrap;text-align:right;font-size:20px}
+  .cat-tag{
+    display:inline-block;padding:7px 18px;border-radius:999px;
+    font-size:12px;font-weight:700;text-transform:uppercase;
+    letter-spacing:.5px;white-space:nowrap;
+  }
+
+  /* DELIVERY / CONTACT */
+  .section-head{text-align:center;margin-bottom:48px}
+  .section-head .eyebrow{display:inline-block;font-size:15px;color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:16px}
+  .section-head h2{font-size:42px;font-weight:800;letter-spacing:-.5px;margin-bottom:18px;line-height:1.2}
+  .section-head p{font-size:19px;color:#b3bccc;max-width:760px;margin:0 auto;line-height:1.6}
+
+  .delivery-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:28px}
+  .delivery-card{
+    background:var(--card);border:1px solid var(--line);
+    border-radius:22px;padding:38px 40px;transition:.25s;
+  }
+  .delivery-card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,.25)}
+  .delivery-card .ico{
+    width:64px;height:64px;border-radius:16px;
+    background:rgba(245,197,24,.12);
+    display:flex;align-items:center;justify-content:center;
+    font-size:30px;margin-bottom:22px;
+  }
+  .delivery-card h3{font-size:24px;font-weight:800;margin-bottom:16px;color:var(--txt)}
+  .delivery-card p{font-size:18px;line-height:1.8;color:#cbd5e1;margin-bottom:12px}
+  .delivery-card p:last-child{margin-bottom:0}
+  .delivery-card strong{color:var(--accent);font-weight:700}
+
+  .info-note{
+    background:linear-gradient(135deg,#1a1f2a,#141820);
+    border:1px solid var(--line);border-left:5px solid var(--accent);
+    border-radius:18px;padding:28px 34px;margin-top:10px;
+  }
+  .info-note p{font-size:18px;line-height:1.8;color:#cbd5e1;margin:0}
+  .info-note strong{color:var(--accent)}
+
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:960px;margin:0 auto 28px}
+  .contact-card{
+    background:var(--card);border:1px solid var(--line);
+    border-radius:22px;padding:38px 40px;transition:.25s;
+    display:flex;align-items:flex-start;gap:22px;
+  }
+  .contact-card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,.25)}
+  .contact-card .ico{
+    width:64px;height:64px;border-radius:16px;
+    background:rgba(245,197,24,.12);
+    display:flex;align-items:center;justify-content:center;
+    font-size:30px;flex-shrink:0;
+  }
+  .contact-card .body{flex:1}
+  .contact-card .label{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;font-weight:700}
+  .contact-card .value{font-size:23px;font-weight:700;color:var(--txt);line-height:1.4;word-break:break-word}
+  .contact-card a{color:var(--txt);text-decoration:none;transition:.2s}
+  .contact-card a:hover{color:var(--accent)}
+  .contact-card.highlight{background:linear-gradient(135deg,#1a1f2a,#141820);border-color:rgba(245,197,24,.3)}
+  .contact-card.highlight .ico{background:linear-gradient(135deg,var(--accent),var(--orange));color:#111}
+
+  .pager{
+    display:flex;justify-content:space-between;gap:20px;
+    margin-top:56px;padding-top:36px;border-top:1px solid var(--line);
+  }
+  .pager a{
+    display:inline-flex;align-items:center;gap:12px;
+    color:var(--accent);text-decoration:none;
+    font-size:17px;font-weight:700;transition:.2s;cursor:pointer;
+  }
+  .pager a:hover{transform:translateX(2px)}
+  .pager a.back:hover{transform:translateX(-2px)}
+
+  @media(max-width:1200px){
+    .title-content{grid-template-columns:1fr 1.2fr;gap:36px}
+    .title-left h2{font-size:32px}
+  }
+  @media(max-width:1024px){
+    body{flex-direction:column;font-size:18px}
+    .sidebar{
+      position:static;width:100%;height:auto;
+      border-right:none;border-bottom:1px solid var(--line);
+      flex-direction:row;flex-wrap:wrap;padding:18px;gap:14px;
+    }
+    .sidebar .logo{flex:1;padding-bottom:0;border-bottom:none}
+    .nav-group{flex-direction:row;flex-wrap:wrap;flex:2}
+    .nav-group .group-title{display:none}
+    .nav-group a{padding:10px 14px;font-size:15px}
+    .sidebar-footer{display:none}
+    .main{margin-left:0;padding:32px}
+    .product-layout{grid-template-columns:1fr;gap:32px}
+    .product-img{height:400px}
+    .product-info h1{font-size:34px}
+    .detail-block{padding:32px}
+    .delivery-grid{grid-template-columns:1fr}
+    .contact-grid{grid-template-columns:1fr}
+    .section-head h2{font-size:34px}
+  }
+  @media(max-width:900px){
+    .title-header{flex-direction:row;align-items:center}
+    .title-logo{width:80px;height:80px;border-radius:16px}
+    .title-header-text h1{font-size:30px}
+    .title-header-text p{font-size:15px}
+    .title-content{grid-template-columns:1fr;gap:32px}
+    .title-left h2{font-size:30px}
+    .title-right .about-title{font-size:22px}
+    .title-right .about-card p{font-size:17px}
+  }
+  @media(max-width:768px){
+    body{font-size:17px}
+    .section-head h2{font-size:30px}
+    .price-table thead{display:none}
+    .price-table,.price-table tbody,.price-table tr,.price-table td{display:block;width:100%}
+    .price-table tr{padding:22px 24px;border-bottom:1px solid var(--line)}
+    .price-table tr:last-child{border-bottom:none}
+    .price-table td{padding:8px 0;border:none;display:flex;justify-content:space-between;gap:18px;font-size:17px}
+    .price-table td::before{content:attr(data-label);font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-weight:700;flex-shrink:0}
+    .price-table td:first-child{font-size:22px;color:var(--accent);width:auto;justify-content:flex-start;padding-bottom:12px}
+    .price-table td:first-child::before{display:none}
+    .price-table td:nth-child(2){font-size:19px;font-weight:700;display:block;padding-bottom:14px}
+    .price-table td:nth-child(2)::before{display:none}
+    .price-table .price-cell{font-size:22px;text-align:right;padding-top:12px}
+  }
+  @media(max-width:600px){
+    body{font-size:17px}
+    .main{padding:22px}
+    .product-img{height:320px}
+    .product-info h1{font-size:28px}
+    .product-info .short-desc{font-size:17px}
+    .price-box{padding:22px 24px;flex-direction:column;align-items:flex-start;gap:14px}
+    .price-box .price-main{font-size:42px}
+    .specs{grid-template-columns:1fr}
+    .spec .val{font-size:17px}
+    .detail-block{padding:26px}
+    .detail-block h3{font-size:20px}
+    .detail-block p,.detail-block ul li{font-size:17px}
+    .tech-table{font-size:16px}
+    .tech-table th,.tech-table td{padding:14px 16px}
+    .btn{width:100%;justify-content:center;font-size:16px}
+    .crumbs{font-size:14px}
+    .title-page{gap:22px}
+    .title-header{padding-bottom:20px;gap:16px}
+    .title-logo{width:64px;height:64px;border-radius:12px;padding:6px}
+    .title-header-text h1{font-size:22px;letter-spacing:1px}
+    .title-header-text p{font-size:13px}
+    .title-left h2{font-size:24px;margin-bottom:14px}
+    .title-left .lead{font-size:15px;margin-bottom:22px}
+    .title-left .stats{grid-template-columns:1fr 1fr;gap:10px}
+    .title-left .stat{padding:14px}
+    .title-left .stat .value{font-size:18px}
+    .title-right .about-card{padding:24px 22px;border-radius:16px}
+    .title-right .about-title{font-size:19px;margin-bottom:16px}
+    .title-right .about-card p{font-size:16px;line-height:1.7;margin-bottom:14px}
+    .delivery-card{padding:28px 26px;border-radius:18px}
+    .delivery-card h3{font-size:21px}
+    .delivery-card p{font-size:17px}
+    .info-note{padding:24px 26px}
+    .info-note p{font-size:17px}
+    .contact-card{padding:28px 26px;border-radius:18px;gap:16px}
+    .contact-card .ico{width:54px;height:54px;font-size:26px;border-radius:14px}
+    .contact-card .value{font-size:19px}
+    .section-head h2{font-size:26px}
+    .section-head p{font-size:17px}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= SIDEBAR ================= -->
+<aside class="sidebar">
+  <a class="logo" onclick="go('title')">
+    <div class="logo-mark">
+      <img src="images/logo.png" alt="OPTIMIX">
+    </div>
+    <div class="logo-text">
+      <h1>OPTIMIX</h1>
+      <p>Производитель</p>
+    </div>
+  </a>
+
+  <nav class="nav-group">
+    <div class="group-title">Главная</div>
+    <a onclick="go('title')" data-nav="title"><span class="ico">🏠</span> Титульная</a>
+  </nav>
+
+  <nav class="nav-group">
+    <div class="group-title">Грунтовки</div>
+    <a onclick="go('g1')" data-nav="g1"><span class="ico">🪣</span> Глубокого проникновения</a>
+    <a onclick="go('g2')" data-nav="g2"><span class="ico">🪣</span> Концентрат 1:4</a>
+    <a onclick="go('g3')" data-nav="g3"><span class="ico">🪣</span> Бетон-контакт</a>
+  </nav>
+
+  <nav class="nav-group">
+    <div class="group-title">Очиститель</div>
+    <a onclick="go('c1')" data-nav="c1"><span class="ico">🧴</span> От цемента и высолов</a>
+  </nav>
+
+  <nav class="nav-group">
+    <div class="group-title">Краски</div>
+    <a onclick="go('p1')" data-nav="p1"><span class="ico">🎨</span> Фасадная</a>
+    <a onclick="go('p2')" data-nav="p2"><span class="ico">🎨</span> Интерьерная</a>
+    <a onclick="go('p3')" data-nav="p3"><span class="ico">🎨</span> Моющаяся</a>
+    <a onclick="go('p4')" data-nav="p4"><span class="ico">🎨</span> Для потолков</a>
+  </nav>
+
+  <nav class="nav-group">
+    <div class="group-title">Информация</div>
+    <a onclick="go('price')" data-nav="price"><span class="ico">📋</span> Сводная таблица</a>
+    <a onclick="go('delivery')" data-nav="delivery"><span class="ico">🚚</span> Условия поставки</a>
+    <a onclick="go('contact')" data-nav="contact"><span class="ico">📞</span> Контакты</a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <strong>Никита</strong>
+    +7 925 325 4458<br>
+    +7 903 726 02 68<br><br>
+    <a href="https://optimix-lkm.com/" target="_blank">optimix-lkm.com</a>
+  </div>
+</aside>
+
+<!-- ================= MAIN ================= -->
+<main class="main">
+
+  <!-- ТИТУЛЬНАЯ -->
+  <div class="page active" id="page-title">
+    <div class="title-page">
+      <div class="title-header">
+        <div class="title-logo">
+          <img src="images/logo.png" alt="OPTIMIX — логотип">
+        </div>
+        <div class="title-header-text">
+          <h1>OPTIMIX</h1>
+          <p>Производитель лакокрасочных и отделочных материалов</p>
+        </div>
+      </div>
+
+      <div class="title-content">
+        <div class="title-left">
+          <h2>OPTIMIX — <span>производитель</span> лакокрасочных и отделочных материалов</h2>
+          <p class="lead">Грунтовки, очистители и акриловые вододисперсионные краски для наружных и внутренних работ. Производим сами с 2010 года.</p>
+
+          <div class="stats">
+            <div class="stat"><div class="label">Опыт</div><div class="value">15 лет</div><div class="sub">с 2010 года</div></div>
+            <div class="stat"><div class="label">Продукция</div><div class="value">8 позиций</div><div class="sub">по прайс-листу</div></div>
+            <div class="stat"><div class="label">Срок поставки</div><div class="value">3–5 дней</div><div class="sub">от объёма</div></div>
+            <div class="stat"><div class="label">Документы</div><div class="value">ГОСТ</div><div class="sub">28196-89</div></div>
+          </div>
+        </div>
+
+        <div class="title-right">
+          <div class="about-card">
+            <div class="about-title">О компании</div>
+            <p>Компания <strong>ООО «Оптимикс»</strong> работает с 2010 года. Генеральный директор окончил технологический институт и долгие годы работал в системе производства стройматериалов: цементное производство, заводы сухих строительных смесей, лакокрасочное производство — занимая ведущие руководящие должности.</p>
+            <p>Сегодня мы производим и поставляем <strong>подготовительные материалы и грунты на водной основе</strong> для подготовки оснований перед нанесением большинства отделочных материалов: клея, штукатурки, шпаклёвки, гидроизоляционных мастик, лаков по камню, наливных и выравнивающих полов, перед наклейкой обоев и покраской.</p>
+            <p>На сегодняшний день организация производит и поставляет отделочные материалы через ряд организаций, являющихся субподрядчиками у крупных строительных компаний.</p>
+            <p>Мы расширяем ассортимент лакокрасочных материалов на водной основе и планируем выпуск материалов на органической составляющей с использованием связующих на эпоксидной, акриловой и алкидной смоле.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- G1 -->
+  <div class="page" id="page-g1">
+    <div class="crumbs"><a onclick="go('title')">Главная</a><span>›</span>Грунтовки<span>›</span>Глубокого проникновения</div>
+
+    <div class="product-layout">
+      <div class="product-img"><img src="images/g1.jpg" alt="Грунтовка глубокого проникновения"></div>
+      <div class="product-info">
+        <span class="cat-tag cat-ground">Грунтовка</span>
+        <h1>Грунтовка акриловая глубокого проникновения</h1>
+        <p class="short-desc">Для наружных и внутренних работ. Предварительная грунтовка по бетону, гипсу, дереву, кирпичу, штукатурке под все виды минеральных покрытий.</p>
+
+        <div class="price-box">
+          <div><div class="price-label">Цена</div><div class="price-main">900 ₽</div></div>
+          <div><div class="price-label">Фасовка</div><div class="pack-value">10 л</div></div>
+        </div>
+
+        <div class="specs">
+          <div class="spec"><div class="lbl">Тип</div><div class="val">Акриловая</div></div>
+          <div class="spec"><div class="lbl">Основа</div><div class="val">Водная</div></div>
+          <div class="spec"><div class="lbl">Расход</div><div class="val">100–150 мл/м²</div></div>
+          <div class="spec"><div class="lbl">Температура</div><div class="val">от +5 °С</div></div>
+        </div>
+
+        <div class="cta-row">
+          <a href="tel:+79253254458" class="btn btn-primary">📞 Запросить КП</a>
+          <a onclick="go('contact')" class="btn btn-secondary">Связаться</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-block">
+      <h3>Область применения</h3>
+      <ul>
+        <li>Стены, полы, потолки на цементной и цементно-известковой основе</li>
+        <li>Бетонные поверхности</li>
+        <li>Гипсокартонные листы</li>
+        <li>Перед нанесением растворных смесей на цементной и гипсовой основе</li>
+        <li>Перед окраской и оклейкой обоями</li>
+        <li>Внутренние и наружные работы</li>
+      </ul>
+    </div>
+
+    <div class="detail-block">
+      <h3>Технические характеристики</h3>
+      <table class="tech-table">
+        <tr><td>Тип</td><td>Акриловая, глубокого проникновения</td></tr>
+        <tr><td>Основа</td><td>Водная</td></tr>
+        <tr><td>Расход</td><td>100–150 мл/м²</td></tr>
+        <tr><td>Температура работ</td><td>не менее +5 °С</td></tr>
+        <tr><td>Свойства</td><td>Пожаровзрывобезопасная, антисептическая, влагостойкая, без органических растворителей</td></tr>
+        <tr><td>Морозостойкость</td><td>до 5 циклов замораживания-оттаивания</td></tr>
+        <tr><td>Срок годности</td><td>12 месяцев</td></tr>
+        <tr><td>Фасовка</td><td>10 л</td></tr>
+        <tr><td>Цена</td><td>900 ₽</td></tr>
+      </table>
+    </div>
+
+    <div class="detail-block">
+      <h3>Способ применения</h3>
+      <p>Поверхность очистить от пыли, грязи, масляных пятен. Непрочно держащиеся участки удалить. Нанести грунт валиком равномерно, без подтёков. Повторное грунтование и отделку — после полного высыхания. Инструмент промыть водой.</p>
+      <p><strong>Условия работ:</strong> температура воздуха и основания — не менее +5 °С. При наружных работах защитить обработанную поверхность от атмосферных осадков до момента высыхания.</p>
+    </div>
+
+    <div class="pager">
+      <a onclick="go('title')" class="back">← Титульная страница</a>
+      <a onclick="go('g2')">Концентрат 1:4 →</a>
+    </div>
+  </div>
+
+  <!-- G2 -->
+  <div class="page" id="page-g2">
+    <div class="crumbs"><a onclick="go('title')">Главная</a><span>›</span>Грунтовки<span>›</span>Концентрат 1:4</div>
+
+    <div class="product-layout">
+      <div class="product-img"><img src="images/g2.jpg" alt="Грунт акриловый Концентрат 1:4"></div>
+      <div class="product-info">
+        <span class="cat-tag cat-ground">Грунтовка</span>
+        <h1>Грунт акриловый «КОНЦЕНТРАТ» 1:4 ВД-АК</h1>
+        <p class="short-desc">Для укрепления слабых и осыпающихся поверхностей. Разбавляется водой 1:1–1:4 в зависимости от задач. Под краски, эмали, наливные полы, укладку плитки.</p>
+
+        <div class="price-box">
+          <div><div class="price-label">Цена</div><div class="price-main">2 500 ₽</div></div>
+          <div><div class="price-label">Фасовка</div><div class="pack-value">10 л</div></div>
+        </div>
+
+        <div class="specs">
+          <div class="spec"><div class="lbl">Тип</div><div class="val">Концентрат</div></div>
+          <div class="spec"><div class="lbl">Разбавление</div><div class="val">1:1 – 1:4</div></div>
+          <div class="spec"><div class="lbl">Расход</div><div class="val">70–150 мл/м²</div></div>
+          <div class="spec"><div class="lbl">Температура</div><div class="val">от +5 °С</div></div>
+        </div>
+
+        <div class="cta-row">
+          <a href="tel:+79253254458" class="btn btn-primary">📞 Запросить КП</a>
+          <a onclick="go('contact')" class="btn btn-secondary">Связаться</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-block">
+      <h3>Область применения</h3>
+      <ul>
+        <li>Мощная пропитка и укрепление слабых, старых поверхностей стен, полов и потолков</li>
+        <li>Цементная и цементно-известковая основа, бетон, гипсокартон</li>
+        <li>Перед растворными смесями, окраской, оклейкой обоями</li>
+        <li>Под краски воднодисперсионные, эмали акриловые водные</li>
+        <li>Под наливные и самонивелируемые полы, укладку плитки</li>
+        <li>Внутренние и наружные работы</li>
+      </ul>
+    </div>
+
+    <div class="detail-block">
+      <h3>Технические характеристики</h3>
+      <table class="tech-table">
+        <tr><td>Тип</td><td>Акриловый концентрат</td></tr>
+        <tr><td>Основа</td><td>Водная</td></tr>
+        <tr><td>Разбавление</td><td>1:1, 1:2, 1:3, 1:4</td></tr>
+        <tr><td>Расход</td><td>70–150 мл/м² в зависимости от разбавления</td></tr>
+        <tr><td>Температура работ</td><td>не менее +5 °С</td></tr>
+        <tr><td>Свойства</td><td>Пожаровзрывобезопасный, антисептический, влагостойкий, без растворителей</td></tr>
+        <tr><td>Морозостойкость</td><td>до 5 циклов</td></tr>
+        <tr><td>Срок годности</td><td>12 месяцев</td></tr>
+        <tr><td>Фасовка</td><td>10 л</td></tr>
+        <tr><td>Цена</td><td>2 500 ₽</td></tr>
+      </table>
+    </div>
+
+    <div class="detail-block">
+      <h3>Способ применения</h3>
+      <p><strong>При прочном основании:</strong> смешать концентрат с водой 1:4 и применять как обычную грунтовку глубокого проникновения.</p>
+      <p><strong>При ответственной работе:</strong> соотношение 1:1.</p>
+      <p><strong>При слабых, осыпающихся основаниях:</strong> использовать без разбавления для усиленной пропитки.</p>
+      <p>Нанести валиком без подтёков. Отделку — после полного высыхания. Инструмент промыть водой.</p>
+    </div>
+
+    <div class="pager">
+      <a onclick="go('g1')" class="back">← Глубокого проникновения</a>
+      <a onclick="go('g3')">Бетон-контакт →</a>
+    </div>
+  </div>
+
+  <!-- G3 -->
+  <div class="page" id="page-g3">
+    <div class="crumbs"><a onclick="go('title')">Главная</a><span>›</span>Грунтовки<span>›</span>Бетон-контакт</div>
+
+    <div class="product-layout">
+      <div class="product-img"><img src="images/g3.jpg" alt="Грунтовка Бетон-контакт"></div>
+      <div class="product-info">
+        <span class="cat-tag cat-ground">Грунтовка</span>
+        <h1>Грунтовка «БЕТОН-КОНТАКТ»</h1>
+        <p class="short-desc">Создание шероховатой поверхности на гладких минеральных основаниях под штукатурки и шпатлёвки. В состав входит красный пигмент для чёткой фиксации прогрунтованной части.</p>
+
+        <div class="price-box">
+          <div><div class="price-label">Цена</div><div class="price-main">1 900 ₽</div></div>
+          <div><div class="price-label">Фасовка</div><div class="pack-value">20 л</div></div>
+        </div>
+
+        <div class="specs">
+          <div class="spec"><div class="lbl">Тип</div><div class="val">С наполнителем</div></div>
+          <div class="spec"><div class="lbl">Основа</div><div class="val">Водная</div></div>
+          <div class="spec"><div class="lbl">Расход</div><div class="val">450–500 мл/м²</div></div>
+          <div class="spec"><div class="lbl">Температура</div><div class="val">+5…+30 °С</div></div>
+        </div>
+
+        <div class="cta-row">
+          <a href="tel:+79253254458" class="btn btn-primary">📞 Запросить КП</a>
+          <a onclick="go('contact')" class="btn btn-secondary">Связаться</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-block">
+      <h3>Область применения</h3>
+      <ul>
+        <li>Создание шероховатой поверхности бетонных и других гладких минеральных оснований</li>
+        <li>Под дальнейшую обработку штукатуркой, шпаклёвкой, клеевыми растворами</li>
+        <li>Под гипсовые штукатурки и шпатлёвки</li>
+        <li>Повышает прочность сцепления отделочных материалов</li>
+        <li>Красный пигмент для визуального контроля прогрунтованных участков</li>
+      </ul>
+    </div>
+
+    <div class="detail-block">
+      <h3>Технические характеристики</h3>
+      <table class="tech-table">
+        <tr><td>Тип</td><td>Грунтовка с наполнителем</td></tr>
+        <tr><td>Состав</td><td>Водная дисперсия стирол-акриловых сополимеров с наполнителями</td></tr>
+        <tr><td>Расход</td><td>450–500 мл/м²</td></tr>
+        <tr><td>Температура работ</td><td>от +5 °С до +30 °С</td></tr>
+        <tr><td>Цвет</td><td>С красным пигментом</td></tr>
+        <tr><td>Морозостойкость</td><td>до 5 циклов</td></tr>
+        <tr><td>Срок годности</td><td>12 месяцев</td></tr>
+        <tr><td>Фасовка</td><td>20 л</td></tr>
+        <tr><td>Цена</td><td>1 900 ₽</td></tr>
+      </table>
+    </div>
+
+    <div class="detail-block">
+      <h3>Способ применения</h3>
+      <p>Поверхность должна быть сухой, прочной, очищенной от грязи, пыли, масляных пятен, слабо держащихся покрытий и средств для отделения опалубки. Грунт тщательно перемешать и нанести сплошным равномерным слоем кистью, щёткой или валиком. Дальнейшие работы — после полного высыхания и набора прочности.</p>
+    </div>
+
+    <div class="pager">
+      <a onclick="go('g2')" class="back">← Концентрат 1:4</a>
+      <a onclick="go('c1')">Очиститель →</a>
+    </div>
+  </div>
+
+  <!-- C1 -->
+  <div class="page" id="page-c1">
+    <div class="crumbs"><a onclick="go('title')">Главная</a><span>›</span>Очиститель</div>
+
+    <div class="product-layout">
+      <div class="product-img"><img src="images/c1.jpg" alt="Очиститель от цемента и высолов"></div>
+      <div class="product-info">
+        <span class="cat-tag cat-clean">Очиститель</span>
+        <h1>Очиститель от цемента и высолов</h1>
+        <p class="short-desc">Эффективно удаляет свежие и старые прочные остатки цементного раствора, бетона, клея, шпаклёвки, а также высолы. Не нарушает фактуру и не изменяет цвет очищаемой поверхности.</p>
+
+        <div class="price-box">
+          <div><div class="price-label">Цена</div><div class="price-main">1 700 ₽</div></div>
+          <div><div class="price-label">Фасовка</div><div class="pack-value">10 л</div></div>
+        </div>
+
+        <div class="specs">
+          <div class="spec"><div class="lbl">Тип</div><div class="val">Кислотный</div></div>
+          <div class="spec"><div class="lbl">Состав</div><div class="val">Неорг. кислоты</div></div>
+          <div class="spec"><div class="lbl">Назначение</div><div class="val">Цемент, высолы</div></div>
+          <div class="spec"><div class="lbl">Разбавление</div><div class="val">1:1 – 1:3</div></div>
+        </div>
+
+        <div class="cta-row">
+          <a href="tel:+79253254458" class="btn btn-primary">📞 Запросить КП</a>
+          <a onclick="go('contact')" class="btn btn-secondary">Связаться</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-block">
+      <h3>Область применения</h3>
+      <ul>
+        <li>Очистка кирпичных, каменных и отделанных декоративными элементами фасадов</li>
+        <li>Удаление следов бетона, извести, цемента, штукатурных составов</li>
+        <li>Удаление клеевых и шпаклёвочных загрязнений после фасадных работ</li>
+        <li>Удаление солевых пятен и высолов</li>
+        <li>Очистка известковых загрязнений на керамической плитке, раковинах, ваннах</li>
+        <li>Керамическая плитка, стёкла, гладкий облицовочный кирпич</li>
+      </ul>
+    </div>
+
+    <div class="detail-block">
+      <h3>Технические характеристики</h3>
+      <table class="tech-table">
+        <tr><td>Тип</td><td>Кислотный очиститель</td></tr>
+        <tr><td>Состав</td><td>Водный раствор неорганических кислот, корректирующие добавки</td></tr>
+        <tr><td>Назначение</td><td>Удаление цемента, клея, шпаклёвки, высолов</td></tr>
+        <tr><td>Разбавление</td><td>1:1 – 1:3 в зависимости от загрязнения</td></tr>
+        <tr><td>Противопоказания</td><td>Не использовать для мрамора и известняков</td></tr>
+        <tr><td>Фасовка</td><td>10 л</td></tr>
+        <tr><td>Цена</td><td>1 700 ₽</td></tr>
+      </table>
+    </div>
+
+    <div class="detail-block">
+      <h3>Способ применения</h3>
+      <p><strong>Старые прочные остатки:</strong> крупные фрагменты удалить механически. Оставшийся слой обильно обработать очистителем. При реакции появляется пенообразный слой. Через 5 минут удалить разрыхлённый слой металлической щёткой, промыть водой. Повторить при необходимости.</p>
+      <p><strong>Свежие непрочные остатки:</strong> разбавить водой 1:1, нанести, дать постоять 5 минут, удалить губкой, промыть водой.</p>
+      <p><strong>Высолы:</strong> разбавить 1:1 – 1:3. Нанести, через 2–3 минуты смыть обильным количеством воды.</p>
+      <p>Перед применением рекомендуется провести пробные работы на незаметном участке.</p>
+    </div>
+
+    <div class="pager">
+      <a onclick="go('g3')" class="back">← Бетон-контакт</a>
+      <a onclick="go('p1')">Краска Фасадная →</a>
+    </div>
+  </div>
+
+  <!-- P1 -->
+  <div class="page" id="page-p1">
+    <div class="crumbs"><a onclick="go('title')">Главная</a><span>›</span>Краски<span>›</span>Фасадная</div>
+
+    <div class="product-layout">
+      <div class="product-img"><img src="images/p1.jpg" alt="Краска Фасадная"></div>
+      <div class="product-info">
+        <span class="cat-tag cat-paint">Краска</span>
+        <h1>Краска ВД-АК «ФАСАДНАЯ» белая. База А и С</h1>
+        <p class="short-desc">Для фасадов зданий и внутренних помещений. Высокая атмосферостойкость, водостойкость, хорошая укрывистость. Без запаха, экологичная.</p>
+
+        <div class="price-box">
+          <div><div class="price-label">Цена</div><div class="price-main">2 500 ₽</div></div>
+          <div><div class="price-label">Фасовка</div><div class="pack-value">14 кг / 25 кг</div></div>
+        </div>
+
+        <div class="specs">
+          <div class="spec"><div class="lbl">База</div><div class="val">А и С</div></div>
+          <div class="spec"><div class="lbl">Белизна</div><div class="val">88–90%</div></div>
+          <div class="spec"><div class="lbl">Расход</div><div class="val">0,13–0,15 кг/м²</div></div>
+          <div class="spec"><div class="lbl">Сушка</div><div class="val">1 час</div></div>
+        </div>
+
+        <div class="cta-row">
+          <a href="tel:+79253254458" class="btn btn-primary">📞 Запросить КП</a>
+          <a onclick="go('contact')" class="btn btn-secondary">Связаться</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-block">
+      <h3>Область применения</h3>
+      <ul>
+        <li>Фасады зданий и сооружений</li>
+        <li>Поверхности внутри помещений</li>
+        <li>Помещения с ненормируемой влажностью</li>
+        <li>Бетон, кирпич, шпаклёвки, штукатурки</li>
+        <li>Загрунтованный металл, старые покрытия, дерево и другие пористые поверхности</li>
+        <li>Колеруется в пастельные тона водными пигментными пастами</li>
+      </ul>
+    </div>
+
+    <div class="detail-block">
+      <h3>Технические характеристики</h3>
+      <table class="tech-table">
+        <tr><td>Тип</td><td>Акриловая вододисперсионная</td></tr>
+        <tr><td>База</td><td>А и С</td></tr>
+        <tr><td>Цвет</td><td>Белый, коэффициент белизны 88–90%</td></tr>
+        <tr><td>Расход</td><td>0,13–0,15 кг/м² на слой</td></tr>
+        <tr><td>Время сушки</td><td>1 час</td></tr>
+        <tr><td>Температура основания</td><td>от +5 °С до +30 °С</td></tr>
+        <tr><td>Колеровка</td><td>Водными пигментными пастами</td></tr>
+        <tr><td>Срок годности</td><td>12 месяцев</td></tr>
+        <tr><td>Стандарт</td><td>ГОСТ 28196-89</td></tr>
+        <tr><td>Фасовка</td><td>14 кг / 25 кг</td></tr>
+        <tr><td>Цена</td><td>2 500 / 4 400 ₽</td></tr>
+      </table>
+    </div>
+
+    <div class="detail-block">
+      <h3>Способ применения</h3>
+      <p>Поверхность очистить от пыли и грязи, заровнять щели и углубления шпатлёвкой «ОПТИМА» или подходящей. Для упрочнения загрунтовать грунтовкой OPTIMIX. Краску перемешать, при необходимости разбавить водой.</p>
+      <p>Нанести кистью, валиком или краскораспылителем в один или два слоя с промежуточной сушкой 1 час при +15…+25 °С. Применять при температуре не ниже +8 °С. Инструмент и пятна не засохшей краски отмыть тёплой водой с мылом.</p>
+    </div>
+
+    <div class="pager">
+      <a onclick="go('c1')" class="back">← Очиститель</a>
+      <a onclick="go('p2')">Интерьерная →</a>
+    </div>
+  </div>
+
+  <!-- P2 -->
+  <div class="page" id="page-p2">
+    <div class="crumbs"><a onclick="go('title')">Главная</a><span>›</span>Краски<span>›</span>Интерьерная</div>
+
+    <div class="product-layout">
+      <div class="product-img"><img src="images/p2.jpg" alt="Краска Интерьерная"></div>
+      <div class="product-info">
+        <span class="cat-tag cat-paint">Краска</span>
+        <h1>Краска ВД-АК «ИНТЕРЬЕРНАЯ» белая. База А и С</h1>
+        <p class="short-desc">Для стен, потолков и других поверхностей внутри помещений. Моющаяся, водостойкая, содержит антисептические добавки. Основной наполнитель — мраморная мука.</p>
+
+        <div class="price-box">
+          <div><div class="price-label">Цена</div><div class="price-main">1 650 ₽</div></div>
+          <div><div class="price-label">Фасовка</div><div class="pack-value">14 кг / 25 кг</div></div>
+        </div>
+
+        <div class="specs">
+          <div class="spec"><div class="lbl">База</div><div class="val">А и С</div></div>
+          <div class="spec"><div class="lbl">Белизна</div><div class="val">90–93%</div></div>
+          <div class="spec"><div class="lbl">Расход</div><div class="val">0,13–0,15 кг/м²</div></div>
+          <div class="spec"><div class="lbl">Сушка</div><div class="val">1 час</div></div>
+        </div>
+
+        <div class="cta-row">
+          <a href="tel:+79253254458" class="btn btn-primary">📞 Запросить КП</a>
+          <a onclick="go('contact')" class="btn btn-secondary">Связаться</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-block">
+      <h3>Область применения</h3>
+      <ul>
+        <li>Стены, потолки и другие поверхности внутри помещений</li>
+        <li>Бетон, кирпич, шпаклёвки, штукатурки</li>
+        <li>Загрунтованный металл, старые покрытия, дерево и другие пористые поверхности</li>
+        <li>Колеруется в пастельные тона водными пигментными пастами</li>
+      </ul>
+    </div>
+
+    <div class="detail-block">
+      <h3>Технические характеристики</h3>
+      <table class="tech-table">
+        <tr><td>Тип</td><td>Акриловая вододисперсионная</td></tr>
+        <tr><td>База</td><td>А и С</td></tr>
+        <tr><td>Цвет</td><td>Белый, коэффициент белизны 90–93%</td></tr>
+        <tr><td>Расход</td><td>0,13–0,15 кг/м² на слой</td></tr>
+        <tr><td>Время сушки</td><td>1 час</td></tr>
+        <tr><td>Температура основания</td><td>от +5 °С до +30 °С</td></tr>
+        <tr><td>Свойства</td><td>Моющаяся, водостойкая, антисептические добавки, наполнитель — мраморная мука</td></tr>
+        <tr><td>Срок годности</td><td>12 месяцев</td></tr>
+        <tr><td>Стандарт</td><td>ГОСТ 28196-89</td></tr>
+        <tr><td>Фасовка</td><td>14 кг / 25 кг</td></tr>
+        <tr><td>Цена</td><td>1 650 / 2 870 ₽</td></tr>
+      </table>
+    </div>
+
+    <div class="detail-block">
+      <h3>Способ применения</h3>
+      <p>Поверхность очистить от пыли и грязи, заровнять щели и углубления шпатлёвкой «ОПТИМА». Для упрочнения загрунтовать грунтовкой OPTIMIX. Краску перемешать, при необходимости разбавить водой.</p>
+      <p>Нанести кистью, валиком или краскораспылителем в один или два слоя с промежуточной сушкой 1 час. Инструмент отмыть тёплой водой с мылом.</p>
+    </div>
+
+    <div class="pager">
+      <a onclick="go('p1')" class="back">← Фасадная</a>
+      <a onclick="go('p3')">Моющаяся →</a>
+    </div>
+  </div>
+
+  <!-- P3 -->
+  <div class="page" id="page-p3">
+    <div class="crumbs"><a onclick="go('title')">Главная</a><span>›</span>Краски<span>›</span>Моющаяся</div>
+
+    <div class="product-layout">
+      <div class="product-img"><img src="images/p3.jpg" alt="Краска Моющаяся"></div>
+      <div class="product-info">
+        <span class="cat-tag cat-paint">Краска</span>
+        <h1>Краска ВД-АК «ИНТЕРЬЕРНАЯ. МОЮЩАЯСЯ» белая. База А и С</h1>
+        <p class="short-desc">Экологичная краска без запаха с повышенной паропроницаемостью. Стойкая к мытью свежих загрязнений губкой или влажной тряпкой.</p>
+
+        <div class="price-box">
+          <div><div class="price-label">Цена</div><div class="price-main">2 350 ₽</div></div>
+          <div><div class="price-label">Фасовка</div><div class="pack-value">14 кг / 25 кг</div></div>
+        </div>
+
+        <div class="specs">
+          <div class="spec"><div class="lbl">База</div><div class="val">А и С</div></div>
+          <div class="spec"><div class="lbl">Свойства</div><div class="val">Моющаяся</div></div>
+          <div class="spec"><div class="lbl">Расход</div><div class="val">0,13–0,15 кг/м²</div></div>
+          <div class="spec"><div class="lbl">Сушка</div><div class="val">1 час</div></div>
+        </div>
+
+        <div class="cta-row">
+          <a href="tel:+79253254458" class="btn btn-primary">📞 Запросить КП</a>
+          <a onclick="go('contact')" class="btn btn-secondary">Связаться</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-block">
+      <h3>Область применения</h3>
+      <ul>
+        <li>Внутренние и наружные работы под навесом</li>
+        <li>Стены и потолки в помещениях с умеренной эксплуатационной нагрузкой</li>
+        <li>Помещения с повышенной влажностью</li>
+        <li>Бетонные, кирпичные, оштукатуренные и другие минеральные поверхности</li>
+        <li>Наносить на подготовленную прогрунтованную поверхность</li>
+        <li>Колеруется в пастельные и желаемые тона</li>
+      </ul>
+    </div>
+
+    <div class="detail-block">
+      <h3>Технические характеристики</h3>
+      <table class="tech-table">
+        <tr><td>Тип</td><td>Акриловая вододисперсионная моющаяся</td></tr>
+        <tr><td>База</td><td>А и С</td></tr>
+        <tr><td>Цвет</td><td>Белый</td></tr>
+        <tr><td>Расход</td><td>0,13–0,15 кг/м² на слой</td></tr>
+        <tr><td>Время сушки</td><td>1 час</td></tr>
+        <tr><td>Температура основания</td><td>от +5 °С до +30 °С</td></tr>
+        <tr><td>Свойства</td><td>Экологичная, без запаха, паропроницаемая, стойкая к мытью</td></tr>
+        <tr><td>Срок годности</td><td>12 месяцев</td></tr>
+        <tr><td>Стандарт</td><td>ГОСТ 28196-89</td></tr>
+        <tr><td>Фасовка</td><td>14 кг / 25 кг</td></tr>
+        <tr><td>Цена</td><td>2 350 / 4 100 ₽</td></tr>
+      </table>
+    </div>
+
+    <div class="detail-block">
+      <h3>Способ применения</h3>
+      <p>Поверхность очистить, заровнять щели и углубления. Для упрочнения загрунтовать грунтовкой OPTIMIX. Краску перемешать, при необходимости разбавить водой. Нанести кистью, валиком или краскораспылителем в один или два слоя с промежуточной сушкой 1 час.</p>
+    </div>
+
+    <div class="pager">
+      <a onclick="go('p2')" class="back">← Интерьерная</a>
+      <a onclick="go('p4')">Для потолков →</a>
+    </div>
+  </div>
+
+  <!-- P4 -->
+  <div class="page" id="page-p4">
+    <div class="crumbs"><a onclick="go('title')">Главная</a><span>›</span>Краски<span>›</span>Для потолков</div>
+
+    <div class="product-layout">
+      <div class="product-img"><img src="images/p4.jpg" alt="Краска Для потолков"></div>
+      <div class="product-info">
+        <span class="cat-tag cat-paint">Краска</span>
+        <h1>Краска ВД-АК «ДЛЯ ПОТОЛКОВ» белая</h1>
+        <p class="short-desc">Для потолков внутри помещений. Паропроницаемая, долговечная, моющаяся, водостойкая. Содержит антисептические добавки. Основной наполнитель — мраморная мука.</p>
+
+        <div class="price-box">
+          <div><div class="price-label">Цена</div><div class="price-main">1 500 ₽</div></div>
+          <div><div class="price-label">Фасовка</div><div class="pack-value">14 кг / 25 кг</div></div>
+        </div>
+
+        <div class="specs">
+          <div class="spec"><div class="lbl">Тип</div><div class="val">ВД-АК</div></div>
+          <div class="spec"><div class="lbl">Белизна</div><div class="val">88–93%</div></div>
+          <div class="spec"><div class="lbl">Расход</div><div class="val">0,13–0,15 кг/м²</div></div>
+          <div class="spec"><div class="lbl">Сушка</div><div class="val">1 час</div></div>
+        </div>
+
+        <div class="cta-row">
+          <a href="tel:+79253254458" class="btn btn-primary">📞 Запросить КП</a>
+          <a onclick="go('contact')" class="btn btn-secondary">Связаться</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-block">
+      <h3>Область применения</h3>
+      <ul>
+        <li>Потолки внутри помещений</li>
+        <li>Бетон, кирпич, штукатурка, дерево</li>
+        <li>ДВП, ДСП</li>
+        <li>Оштукатуренные или ранее окрашенные поверхности</li>
+        <li>Колеруется в пастельные тона водными пигментными пастами</li>
+      </ul>
+    </div>
+
+    <div class="detail-block">
+      <h3>Технические характеристики</h3>
+      <table class="tech-table">
+        <tr><td>Тип</td><td>Акриловая вододисперсионная</td></tr>
+        <tr><td>Цвет</td><td>Белый, коэффициент белизны 88–93%</td></tr>
+        <tr><td>Расход</td><td>0,13–0,15 кг/м² на слой</td></tr>
+        <tr><td>Время сушки</td><td>1 час</td></tr>
+        <tr><td>Температура основания</td><td>от +5 °С до +30 °С</td></tr>
+        <tr><td>Свойства</td><td>Паропроницаемая, моющаяся, водостойкая, антисептические добавки</td></tr>
+        <tr><td>Срок годности</td><td>12 месяцев</td></tr>
+        <tr><td>Стандарт</td><td>ГОСТ 28196-89</td></tr>
+        <tr><td>Фасовка</td><td>14 кг / 25 кг</td></tr>
+        <tr><td>Цена</td><td>1 500 / 2 570 ₽</td></tr>
+      </table>
+    </div>
+
+    <div class="detail-block">
+      <h3>Способ применения</h3>
+      <p>Поверхность очистить от пыли и грязи, заровнять щели и углубления шпатлёвкой «OPTIMIX». Поверхности, ранее покрытые мелом или известковыми красками, тщательно очистить. Непрочно держащееся покрытие удалить полностью. Для упрочнения загрунтовать грунтовкой OPTIMIX.</p>
+      <p>Краску перемешать. Нанести кистью, валиком или краскораспылителем в один или два слоя с промежуточной сушкой 1 час при +15…+25 °С. Инструмент отмыть тёплой водой с мылом.</p>
+    </div>
+
+    <div class="pager">
+      <a onclick="go('p3')" class="back">← Моющаяся</a>
+      <a onclick="go('price')">Сводная таблица →</a>
+    </div>
+  </div>
+
+  <!-- PRICE -->
+  <div class="page" id="page-price">
+    <div class="crumbs"><a onclick="go('title')">Главная</a><span>›</span>Сводная таблица</div>
+
+    <div class="section-head">
+      <div class="eyebrow">📋 Прайс-лист</div>
+      <h2>Сводная таблица продукции</h2>
+      <p>8 наименований — грунтовки, очиститель и краски</p>
+    </div>
+
+    <div class="price-table-wrap">
+      <table class="price-table">
+        <thead>
+          <tr><th>№</th><th>Наименование</th><th>Категория</th><th>Фасовка</th><th>Цена</th></tr>
+        </thead>
+        <tbody>
+          <tr><td data-label="№">1</td><td data-label="Наименование">Грунтовка акриловая глубокого проникновения</td><td data-label="Категория"><span class="cat-tag cat-ground">Грунтовка</span></td><td data-label="Фасовка">10 л</td><td data-label="Цена" class="price-cell">900 ₽</td></tr>
+          <tr><td data-label="№">2</td><td data-label="Наименование">Грунт акриловый «КОНЦЕНТРАТ» 1:4 ВД-АК</td><td data-label="Категория"><span class="cat-tag cat-ground">Грунтовка</span></td><td data-label="Фасовка">10 л</td><td data-label="Цена" class="price-cell">2 500 ₽</td></tr>
+          <tr><td data-label="№">3</td><td data-label="Наименование">Грунтовка «БЕТОН-КОНТАКТ»</td><td data-label="Категория"><span class="cat-tag cat-ground">Грунтовка</span></td><td data-label="Фасовка">20 л</td><td data-label="Цена" class="price-cell">1 900 ₽</td></tr>
+          <tr><td data-label="№">4</td><td data-label="Наименование">Очиститель от цемента и высолов</td><td data-label="Категория"><span class="cat-tag cat-clean">Очиститель</span></td><td data-label="Фасовка">10 л</td><td data-label="Цена" class="price-cell">1 700 ₽</td></tr>
+          <tr><td data-label="№">5</td><td data-label="Наименование">Краска ВД-АК «ФАСАДНАЯ» белая. База А и С</td><td data-label="Категория"><span class="cat-tag cat-paint">Краска</span></td><td data-label="Фасовка">14 кг / 25 кг</td><td data-label="Цена" class="price-cell">2 500 / 4 400 ₽</td></tr>
+          <tr><td data-label="№">6</td><td data-label="Наименование">Краска ВД-АК «ИНТЕРЬЕРНАЯ» белая. База А и С</td><td data-label="Категория"><span class="cat-tag cat-paint">Краска</span></td><td data-label="Фасовка">14 кг / 25 кг</td><td data-label="Цена" class="price-cell">1 650 / 2 870 ₽</td></tr>
+          <tr><td data-label="№">7</td><td data-label="Наименование">Краска ВД-АК «ИНТЕРЬЕРНАЯ. МОЮЩАЯСЯ» белая. База А и С</td><td data-label="Категория"><span class="cat-tag cat-paint">Краска</span></td><td data-label="Фасовка">14 кг / 25 кг</td><td data-label="Цена" class="price-cell">2 350 / 4 100 ₽</td></tr>
+          <tr><td data-label="№">8</td><td data-label="Наименование">Краска ВД-АК «ДЛЯ ПОТОЛКОВ» белая</td><td data-label="Категория"><span class="cat-tag cat-paint">Краска</span></td><td data-label="Фасовка">14 кг / 25 кг</td><td data-label="Цена" class="price-cell">1 500 / 2 570 ₽</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pager">
+      <a onclick="go('p4')" class="back">← Краска Для потолков</a>
+      <a onclick="go('delivery')">Условия поставки →</a>
+    </div>
+  </div>
+
+  <!-- DELIVERY -->
+  <div class="page" id="page-delivery">
+    <div class="crumbs"><a onclick="go('title')">Главная</a><span>›</span>Условия поставки</div>
+
+    <div class="section-head">
+      <div class="eyebrow">🚚 Условия поставки</div>
+      <h2>Как мы работаем</h2>
+      <p>Все вопросы по доставке, объёму и срокам обсуждаем индивидуально — под вашу конкретную задачу</p>
+    </div>
+
+    <div class="delivery-grid">
+      <div class="delivery-card">
+        <div class="ico">💳</div>
+        <h3>Оплата</h3>
+        <p>Работаем с <strong>НДС</strong>, предоставляем все закрывающие документы.</p>
+        <p>Форма и порядок оплаты обсуждаются индивидуально под конкретную поставку.</p>
+      </div>
+
+      <div class="delivery-card">
+        <div class="ico">🚚</div>
+        <h3>Доставка</h3>
+        <p>Все вопросы по доставке решаем вместе с вами: куда везти, какой объём, как удобнее — самовывоз или доставка до объекта, и когда удобно по срокам.</p>
+        <p>Стоимость и условия доставки сообщим, когда будем знать объём и адрес.</p>
+      </div>
+
+      <div class="delivery-card">
+        <div class="ico">📦</div>
+        <h3>Объём заказа</h3>
+        <p><strong>Часть объёма есть на складе</strong> — можем отгрузить быстро.</p>
+        <p>Если нужно больше — производим под заказ. Объём подбираем под вашу задачу: площади, тип основания, количество слоёв, удобные фасовки.</p>
+        <p>Подскажем, какие фасовки выгоднее, и посчитаем нужное количество.</p>
+      </div>
+
+      <div class="delivery-card">
+        <div class="ico">⏱</div>
+        <h3>Сроки производства</h3>
+        <p>Сроки называем отдельно под каждый заказ — они зависят от объёма, загрузки производства, нужной фасовки и наличия на складе.</p>
+        <p>По вашей потребности подтвердим сроки отдельно.</p>
+      </div>
+    </div>
+
+    <div class="info-note">
+      <p><strong>Все вопросы по доставке, объёму и срокам обсуждаем индивидуально</strong> — под вашу конкретную задачу. Свяжитесь с нами, и мы подберём оптимальные условия.</p>
+    </div>
+
+    <div class="pager">
+      <a onclick="go('price')" class="back">← Сводная таблица</a>
+      <a onclick="go('contact')">Контакты →</a>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="page" id="page-contact">
+    <div class="crumbs"><a onclick="go('title')">Главная</a><span>›</span>Контакты</div>
+
+    <div class="section-head">
+      <div class="eyebrow">📞 Контакты</div>
+      <h2>Свяжитесь с нами</h2>
+      <p>Готовы обсудить поставку, ответить на вопросы и подобрать материалы под ваш объект</p>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-card highlight">
+        <div class="ico">👤</div>
+        <div class="body">
+          <div class="label">Менеджер</div>
+          <div class="value">Никита</div>
+        </div>
+      </div>
+
+      <div class="contact-card">
+        <div class="ico">📱</div>
+        <div class="body">
+          <div class="label">Телефон</div>
+          <div class="value"><a href="tel:+79253254458">+7 925 325 4458</a></div>
+        </div>
+      </div>
+
+      <div class="contact-card">
+        <div class="ico">📱</div>
+        <div class="body">
+          <div class="label">Телефон</div>
+          <div class="value"><a href="tel:+79037260268">+7 903 726 02 68</a></div>
+        </div>
+      </div>
+
+      <div class="contact-card">
+        <div class="ico">✉️</div>
+        <div class="body">
+          <div class="label">E-mail</div>
+          <div class="value"><a href="mailto:Salesxnikita@gmail.com">Salesxnikita@gmail.com</a></div>
+        </div>
+      </div>
+
+      <div class="contact-card">
+        <div class="ico">🌐</div>
+        <div class="body">
+          <div class="label">Сайт</div>
+          <div class="value"><a href="https://optimix-lkm.com/" target="_blank">optimix-lkm.com</a></div>
+        </div>
+      </div>
+
+      <div class="contact-card">
+        <div class="ico">📍</div>
+        <div class="body">
+          <div class="label">Адрес</div>
+          <div class="value">Московская обл., Подольск,<br>ул. Плещеевская, д. 24</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-note">
+      <p><strong>Все вопросы по доставке, объёму и срокам обсуждаем индивидуально</strong> — под вашу конкретную задачу. Свяжитесь с нами, и мы подберём оптимальные условия.</p>
+    </div>
+
+    <div class="pager">
+      <a onclick="go('delivery')" class="back">← Условия поставки</a>
+      <a onclick="go('title')">На главную →</a>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  function go(id){
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-group a').forEach(a => a.classList.remove('active'));
+    const page = document.getElementById('page-' + id);
+    if(page){
+      page.classList.add('active');
+      window.scrollTo({top:0, behavior:'instant'});
+    }
+    const nav = document.querySelector(`[data-nav="${id}"]`);
+    if(nav) nav.classList.add('active');
+  }
+</script>
+
+</body>
+</html>
