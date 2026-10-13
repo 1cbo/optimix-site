@@ -299,6 +299,9 @@
   .calc-field input[type="number"]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
   .calc-field input[type="number"]{-moz-appearance:textfield}
 
+  /* Поле «Тип основания» — скрыто по умолчанию */
+  .calc-field.hidden{display:none}
+
   /* ФАСОВКА — КНОПКИ */
   .calc-packs{display:flex;flex-wrap:wrap;gap:10px}
   .calc-pack{
@@ -588,7 +591,7 @@
     <div class="section-head">
       <div class="eyebrow">🧮 Калькулятор</div>
       <h2>Расчёт количества материалов</h2>
-      <p>Выберите продукт, фасовку, укажите площадь и слои — получите количество банок и стоимость</p>
+      <p>Выберите продукт, укажите площадь и слои — получите количество банок и стоимость</p>
     </div>
 
     <div class="calc-wrap">
@@ -609,6 +612,14 @@
           </select>
         </div>
 
+        <!-- Тип основания — показывается ТОЛЬКО для Бетон-контакта -->
+        <div class="calc-field hidden" id="calc-base-field">
+          <label for="calc-base">Тип основания</label>
+          <select id="calc-base">
+            <!-- Заполняется JS -->
+          </select>
+        </div>
+
         <div class="calc-field">
           <label>Фасовка</label>
           <div class="calc-packs" id="calc-packs">
@@ -624,8 +635,8 @@
         <div class="calc-field">
           <label for="calc-layers">Количество слоёв</label>
           <select id="calc-layers">
-            <option value="1">1 слой</option>
-            <option value="2" selected>2 слоя</option>
+            <option value="1" selected>1 слой</option>
+            <option value="2">2 слоя</option>
             <option value="3">3 слоя</option>
           </select>
         </div>
@@ -801,13 +812,13 @@
 
         <div class="price-box">
           <div><div class="price-label">Цена</div><div class="price-main">1 900 ₽</div></div>
-          <div><div class="price-label">Фасовка</div><div class="pack-value">20 л</div></div>
+          <div><div class="price-label">Фасовка</div><div class="pack-value">20 кг</div></div>
         </div>
 
         <div class="specs">
           <div class="spec"><div class="lbl">Тип</div><div class="val">С наполнителем</div></div>
           <div class="spec"><div class="lbl">Основа</div><div class="val">Водная</div></div>
-          <div class="spec"><div class="lbl">Расход</div><div class="val">450–500 мл/м²</div></div>
+          <div class="spec"><div class="lbl">Расход</div><div class="val">0,1–0,5 кг/м²</div></div>
           <div class="spec"><div class="lbl">Температура</div><div class="val">+5…+30 °С</div></div>
         </div>
 
@@ -830,16 +841,27 @@
     </div>
 
     <div class="detail-block">
+      <h3>Расход в зависимости от типа основания</h3>
+      <table class="tech-table">
+        <tr><td>Пористые (пескобетон, строительный кирпич, шлифованный бетон)</td><td>0,25–0,5 кг/м²</td></tr>
+        <tr><td>Среднепористые (бетонная плитка, монолит, наливной цементный пол)</td><td>0,2–0,35 кг/м²</td></tr>
+        <tr><td>Мелкопористые / гладкие (керамическая плитка, краска, эмаль)</td><td>0,1–0,25 кг/м²</td></tr>
+        <tr><td>Оштукатуренные стены</td><td>0,4–0,5 кг/м²</td></tr>
+        <tr><td>Старая облицовочная плитка</td><td>0,15–0,25 кг/м²</td></tr>
+        <tr><td>Гипсокартон, ЦСП</td><td>0,2–0,35 кг/м²</td></tr>
+      </table>
+    </div>
+
+    <div class="detail-block">
       <h3>Технические характеристики</h3>
       <table class="tech-table">
         <tr><td>Тип</td><td>Грунтовка с наполнителем</td></tr>
         <tr><td>Состав</td><td>Водная дисперсия стирол-акриловых сополимеров с наполнителями</td></tr>
-        <tr><td>Расход</td><td>450–500 мл/м²</td></tr>
         <tr><td>Температура работ</td><td>от +5 °С до +30 °С</td></tr>
         <tr><td>Цвет</td><td>С красным пигментом</td></tr>
         <tr><td>Морозостойкость</td><td>до 5 циклов</td></tr>
         <tr><td>Срок годности</td><td>12 месяцев</td></tr>
-        <tr><td>Фасовка</td><td>20 л</td></tr>
+        <tr><td>Фасовка</td><td>20 кг</td></tr>
         <tr><td>Цена</td><td>1 900 ₽</td></tr>
       </table>
     </div>
@@ -1221,7 +1243,7 @@
         <tbody>
           <tr><td data-label="№">1</td><td data-label="Наименование">Грунтовка акриловая глубокого проникновения</td><td data-label="Категория"><span class="cat-tag cat-ground">Грунтовка</span></td><td data-label="Фасовка">10 л</td><td data-label="Цена" class="price-cell">900 ₽</td></tr>
           <tr><td data-label="№">2</td><td data-label="Наименование">Грунт акриловый «КОНЦЕНТРАТ» 1:4 ВД-АК</td><td data-label="Категория"><span class="cat-tag cat-ground">Грунтовка</span></td><td data-label="Фасовка">10 л</td><td data-label="Цена" class="price-cell">2 500 ₽</td></tr>
-          <tr><td data-label="№">3</td><td data-label="Наименование">Грунтовка «БЕТОН-КОНТАКТ»</td><td data-label="Категория"><span class="cat-tag cat-ground">Грунтовка</span></td><td data-label="Фасовка">20 л</td><td data-label="Цена" class="price-cell">1 900 ₽</td></tr>
+          <tr><td data-label="№">3</td><td data-label="Наименование">Грунтовка «БЕТОН-КОНТАКТ»</td><td data-label="Категория"><span class="cat-tag cat-ground">Грунтовка</span></td><td data-label="Фасовка">20 кг</td><td data-label="Цена" class="price-cell">1 900 ₽</td></tr>
           <tr><td data-label="№">4</td><td data-label="Наименование">Очиститель от цемента и высолов</td><td data-label="Категория"><span class="cat-tag cat-clean">Очиститель</span></td><td data-label="Фасовка">10 л</td><td data-label="Цена" class="price-cell">1 700 ₽</td></tr>
           <tr><td data-label="№">5</td><td data-label="Наименование">Краска ВД-АК «ФАСАДНАЯ» белая. База А и С</td><td data-label="Категория"><span class="cat-tag cat-paint">Краска</span></td><td data-label="Фасовка">14 кг / 25 кг</td><td data-label="Цена" class="price-cell">2 500 / 4 400 ₽</td></tr>
           <tr><td data-label="№">6</td><td data-label="Наименование">Краска ВД-АК «ИНТЕРЬЕРНАЯ» белая. База А и С</td><td data-label="Категория"><span class="cat-tag cat-paint">Краска</span></td><td data-label="Фасовка">14 кг / 25 кг</td><td data-label="Цена" class="price-cell">1 650 / 2 870 ₽</td></tr>
@@ -1375,11 +1397,21 @@
     if(id === 'calc') renderCalc();
   }
 
+  // ================== ТИПЫ ОСНОВАНИЙ ДЛЯ БЕТОН-КОНТАКТА ==================
+  const BASES_G3 = [
+    { name:'Пористые (пескобетон, кирпич, шлифованный бетон)', consumption:0.375 },
+    { name:'Среднепористые (бетонная плитка, монолит, наливной цементный пол)', consumption:0.275 },
+    { name:'Мелкопористые / гладкие (керамическая плитка, краска, эмаль)', consumption:0.175 },
+    { name:'Оштукатуренные стены', consumption:0.45 },
+    { name:'Старая облицовочная плитка', consumption:0.2 },
+    { name:'Гипсокартон, ЦСП', consumption:0.275 }
+  ];
+
   // ================== ДАННЫЕ ПРОДУКТОВ ==================
   const PRODUCTS = {
     g1:{ name:'Грунтовка глубокого проникновения', unit:'л', consumption:0.125, packs:[{size:10, price:900}] },
     g2:{ name:'Грунт-концентрат 1:4', unit:'л', consumption:0.11, packs:[{size:10, price:2500}] },
-    g3:{ name:'Грунтовка «Бетон-контакт»', unit:'л', consumption:0.475, packs:[{size:20, price:1900}] },
+    g3:{ name:'Грунтовка «Бетон-контакт»', unit:'кг', consumption:0.375, packs:[{size:20, price:1900}], bases: BASES_G3 },
     c1:{ name:'Очиститель от цемента и высолов', unit:'л', consumption:0.15, packs:[{size:10, price:1700}] },
     p1:{ name:'Краска «Фасадная»', unit:'кг', consumption:0.14, packs:[{size:14, price:2500},{size:25, price:4400}] },
     p2:{ name:'Краска «Интерьерная»', unit:'кг', consumption:0.14, packs:[{size:14, price:1650},{size:25, price:2870}] },
@@ -1387,8 +1419,8 @@
     p4:{ name:'Краска «Для потолков»', unit:'кг', consumption:0.14, packs:[{size:14, price:1500},{size:25, price:2570}] }
   };
 
-  // Текущая выбранная фасовка (индекс)
   let selectedPackIndex = 0;
+  let selectedBaseIndex = 0;
 
   // ================== КАЛЬКУЛЯТОР ==================
   function fmt(n, d=2){
@@ -1396,16 +1428,13 @@
     return n.toLocaleString('ru-RU',{minimumFractionDigits:d, maximumFractionDigits:d});
   }
 
-  // Отрисовать кнопки фасовок при выборе продукта
+  // Рисуем кнопки фасовок
   function renderPacks(){
     const id = document.getElementById('calc-product')?.value;
     const p = PRODUCTS[id];
     const wrap = document.getElementById('calc-packs');
     if(!p || !wrap) return;
-
-    // Сброс на первую фасовку
     selectedPackIndex = 0;
-
     wrap.innerHTML = p.packs.map((pack, i) => `
       <label class="calc-pack ${i === 0 ? 'active' : ''}" data-index="${i}">
         <input type="radio" name="calc-pack" value="${i}" ${i === 0 ? 'checked' : ''}>
@@ -1413,8 +1442,6 @@
         <span class="price">${pack.price.toLocaleString('ru-RU')} ₽</span>
       </label>
     `).join('');
-
-    // Клик по кнопкам
     wrap.querySelectorAll('.calc-pack').forEach(el => {
       el.addEventListener('click', () => {
         wrap.querySelectorAll('.calc-pack').forEach(x => x.classList.remove('active'));
@@ -1425,26 +1452,52 @@
     });
   }
 
-  function calcProduct(id, area, layers, reserve, packIndex){
+  // Поле "Тип основания" — показать/скрыть и заполнить
+  function renderBaseField(){
+    const id = document.getElementById('calc-product')?.value;
+    const p = PRODUCTS[id];
+    const field = document.getElementById('calc-base-field');
+    const select = document.getElementById('calc-base');
+    if(!field || !select) return;
+
+    if(p && p.bases){
+      // Показываем поле
+      field.classList.remove('hidden');
+      // Заполняем опции
+      select.innerHTML = p.bases.map((b, i) => `
+        <option value="${i}" ${i === 0 ? 'selected' : ''}>${b.name} — ${b.consumption} кг/м²</option>
+      `).join('');
+      selectedBaseIndex = 0;
+    } else {
+      // Скрываем поле
+      field.classList.add('hidden');
+      select.innerHTML = '';
+      selectedBaseIndex = 0;
+    }
+  }
+
+  function calcProduct(id, area, layers, reserve, packIndex, baseIndex){
     const p = PRODUCTS[id];
     if(!p) return null;
 
-    const base = area * p.consumption * layers;
+    // Определяем расход
+    let consumption = p.consumption;
+    if(p.bases && p.bases[baseIndex]){
+      consumption = p.bases[baseIndex].consumption;
+    }
+
+    const base = area * consumption * layers;
     const total = reserve ? base * 1.1 : base;
 
-    // Считаем по ВСЕМ фасовкам — для сравнения
     const allVariants = p.packs.map(pack => {
       const qty = Math.max(1, Math.ceil(total / pack.size));
-      return { size:pack.size, qty:qty, totalQty:pack.size*qty, price:qty*pack.price, pricePerUnit:pack.price };
+      return { size:pack.size, qty:qty, totalQty:pack.size*qty, price:qty*pack.price };
     });
 
-    // Выбранная пользователем
     const selected = allVariants[packIndex] || allVariants[0];
-
-    // Лучшая по цене
     const best = allVariants.reduce((min,v) => v.price<min.price ? v : min, allVariants[0]);
 
-    return { product:p, total, variants:allVariants, selected, best };
+    return { product:p, total, variants:allVariants, selected, best, consumption };
   }
 
   function renderCalc(){
@@ -1460,19 +1513,25 @@
       return;
     }
 
-    const res = calcProduct(id, area, layers, reserve, selectedPackIndex);
+    const res = calcProduct(id, area, layers, reserve, selectedPackIndex, selectedBaseIndex);
     if(!res) return;
-    const { product, total, variants, selected, best } = res;
+    const { product, total, variants, selected, best, consumption } = res;
 
     let html = `<h3>Результат расчёта</h3>`;
     html += `<div class="calc-row"><span class="lbl">Продукт</span><span class="val">${product.name}</span></div>`;
+
+    // Показываем тип основания, если применимо
+    if(product.bases && product.bases[selectedBaseIndex]){
+      html += `<div class="calc-row"><span class="lbl">Тип основания</span><span class="val" style="font-size:15px;text-align:right;max-width:60%">${product.bases[selectedBaseIndex].name}</span></div>`;
+    }
+
     html += `<div class="calc-row"><span class="lbl">Площадь × слои</span><span class="val">${area} м² × ${layers}</span></div>`;
+    html += `<div class="calc-row"><span class="lbl">Расход</span><span class="val">${consumption} ${product.unit}/м²</span></div>`;
     html += `<div class="calc-row"><span class="lbl">Нужно материала${reserve?' (+10%)':''}</span><span class="val accent">${fmt(total)} ${product.unit}</span></div>`;
     html += `<div class="calc-row"><span class="lbl">Выбранная фасовка</span><span class="val">${selected.size} ${product.unit} × ${selected.qty} шт</span></div>`;
     html += `<div class="calc-row"><span class="lbl">Итого материала</span><span class="val">${selected.totalQty} ${product.unit}</span></div>`;
     html += `<div class="calc-row total"><span class="lbl">Стоимость</span><span class="val">${selected.price.toLocaleString('ru-RU')} ₽</span></div>`;
 
-    // Если фасовок несколько — показываем сравнение
     if(variants.length > 1){
       html += `<div class="calc-variants"><div class="variants-title">Сравнение фасовок</div>`;
       variants.forEach((v, i) => {
@@ -1486,7 +1545,6 @@
       });
       html += `</div>`;
 
-      // Экономия (если выбранная не самая выгодная)
       if(selected.size !== best.size){
         const saving = selected.price - best.price;
         html += `<div class="calc-savings">💡 Если выбрать ${best.size} ${product.unit} — сэкономите ${saving.toLocaleString('ru-RU')} ₽</div>`;
@@ -1504,9 +1562,16 @@
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    // При смене продукта — перерисовать фасовки
+    // Смена продукта — обновить фасовки и поле основания
     document.getElementById('calc-product')?.addEventListener('change', () => {
       renderPacks();
+      renderBaseField();
+      renderCalc();
+    });
+
+    // Смена типа основания
+    document.getElementById('calc-base')?.addEventListener('change', (e) => {
+      selectedBaseIndex = parseInt(e.target.value) || 0;
       renderCalc();
     });
 
@@ -1518,6 +1583,7 @@
 
     // Инициализация
     renderPacks();
+    renderBaseField();
   });
 </script>
 
